@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/08 15:44:50 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/11 13:37:31 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,17 @@ NAME = philo
 CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
+PTHREAD = -lpthread
 
 # Directories
 SRCDIR = src/c_files
 INCDIR = include
 
 # Files
-SRCS = $(SRCDIR)/philo.c
+SRCS =  $(SRCDIR)/ft_putstr_fd.c \
+		$(SRCDIR)/exit.c \
+		$(SRCDIR)/philo.c
+		
 OBJS = $(SRCS:.c=.o)
 
 # Phony targets
@@ -38,7 +42,7 @@ all: $(NAME)
 
 # Linking
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $@
+	@$(CC) $(CFLAGS) $(PTHREAD) $(OBJS) -o $@
 	@echo "$(COLOR)Compiling and linking: done$(RESET_COLOR)"
 
 # Compiling

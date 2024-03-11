@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/11 15:15:03 by nnourine         ###   ########.fr       */
+/*   Created: 2023/11/04 10:18:52 by nima              #+#    #+#             */
+/*   Updated: 2024/03/11 10:59:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../../include/philo.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <pthread.h>
+void	ft_putchar_fd(char c, int fd)
+{
+	write (fd, &c, sizeof(char));
+}
 
-int		ft_exit_success(void);
-void	ft_putstr_fd(char *s, int fd);
-int		ft_exit_failure(char *error_message);
-void	ft_check_pthread_failure(int error, char *error_message);
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
 
-#endif // PHILO_H
+	i = 0;
+	if (s != 0)
+	{
+		while (s[i] != '\0')
+		{
+			ft_putchar_fd(s[i], fd);
+			i++;
+		}
+	}
+}
