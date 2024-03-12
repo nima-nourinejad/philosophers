@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/11 13:37:31 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/12 10:40:15 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ NAME = philo
 CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
+ADDRESS_SANITIZE = -fsanitize=address
+THREAD_SANITIZE = -fsanitize=thread
+LLDB = -g
 PTHREAD = -lpthread
 
 # Directories
@@ -35,7 +38,7 @@ SRCS =  $(SRCDIR)/ft_putstr_fd.c \
 OBJS = $(SRCS:.c=.o)
 
 # Phony targets
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re address thread lldb
 
 # Default target
 all: $(NAME)
@@ -62,3 +65,18 @@ fclean:
 
 # Recompile
 re: fclean all
+
+# Address sanitizer
+address: fclean
+address: CFLAGS += $(ADDRESS_SANITIZE)
+address: all
+
+# Thread sanitizer
+thread: fclean
+thread: CFLAGS += $(THREAD_SANITIZE)
+thread: all
+
+# LLDB
+lldb: fclean
+lldb: CFLAGS += $(LLDB)
+lldb: all
