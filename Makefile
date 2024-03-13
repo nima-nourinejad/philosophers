@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/12 10:40:15 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/13 15:27:56 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,14 @@ SRCDIR = src/c_files
 INCDIR = include
 
 # Files
-SRCS =  $(SRCDIR)/ft_putstr_fd.c \
+SRCS =  $(SRCDIR)/putstr_fd.c \
+		$(SRCDIR)/strncmp.c \
+		$(SRCDIR)/atoi_error.c \
+		$(SRCDIR)/info_maker.c \
+		$(SRCDIR)/philo_list.c \
+		$(SRCDIR)/clean.c \
 		$(SRCDIR)/exit.c \
-		$(SRCDIR)/philo.c
+		$(SRCDIR)/$(NAME).c
 		
 OBJS = $(SRCS:.c=.o)
 
