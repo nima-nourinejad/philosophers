@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/13 15:27:56 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/14 16:43:58 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,16 @@ SRCDIR = src/c_files
 INCDIR = include
 
 # Files
-SRCS =  $(SRCDIR)/putstr_fd.c \
-		$(SRCDIR)/strncmp.c \
-		$(SRCDIR)/atoi_error.c \
-		$(SRCDIR)/info_maker.c \
+SRCS =  $(SRCDIR)/atoi_error.c \
+		$(SRCDIR)/putstr_fd.c \
+		$(SRCDIR)/fork_holder.c \
+		$(SRCDIR)/input.c \
+		$(SRCDIR)/philo_info.c \
 		$(SRCDIR)/philo_list.c \
+		$(SRCDIR)/fork.c \
+		$(SRCDIR)/philo_now.c \
+		$(SRCDIR)/strncmp.c \
+		$(SRCDIR)/timestamp_ms.c \
 		$(SRCDIR)/clean.c \
 		$(SRCDIR)/exit.c \
 		$(SRCDIR)/$(NAME).c

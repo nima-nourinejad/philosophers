@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   info_maker.c                                       :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/13 13:56:42 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/13 14:44:17 by nnourine         ###   ########.fr       */
+/*   Created: 2024/03/14 10:31:09 by nnourine          #+#    #+#             */
+/*   Updated: 2024/03/14 11:10:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-t_input	ft_input_maker(int argc, char ** argv)
+t_input	ft_create_input(int argc, char **argv)
 {
 	t_input	input;
 	int		error;
@@ -35,15 +35,4 @@ t_input	ft_input_maker(int argc, char ** argv)
 		ft_check_error_exit(error, "wrong format of number of times eat", 1);
 	}
 	return (input);
-}
-
-t_info	ft_info_maker(int argc, char **argv)
-{
-	t_info	info;
-	int		error;
-
-	info.input = ft_input_maker(argc, argv);
-	error = pthread_mutex_init(&(info.mutex), 0);
-	ft_check_error_exit(error, "problem in mutex init", 1);
-	return (info);
 }
