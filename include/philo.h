@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/18 14:26:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:02:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_philo_info
 	t_philo_now		*philo_now;
 	t_fork_holder	*fork_holder;
 	t_input			*input;
+	pthread_mutex_t	l;
 }					t_philo_info;
 
 typedef struct s_philo_input

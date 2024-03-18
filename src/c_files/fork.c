@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fork.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:15:13 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/15 10:55:51 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/18 15:24:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 
 pthread_mutex_t	ft_find_mutex_left(t_fork_holder *fork_holder, int number)
 {
-	pthread_mutex_t	left;
 	t_fork_holder	*node;
 
 	node = fork_holder;
 	while ((*node).number != number && node)
 		node = node->next;
-	left = (*node).mid;
-	return (left);
+	return ((*node).mid);
 }
 
 pthread_mutex_t	ft_find_mutex_right(t_fork_holder *fork_holder, int number)
 {
-	pthread_mutex_t	right;
 	t_fork_holder	*node;
 	t_fork_holder	*last;
 
@@ -38,7 +35,7 @@ pthread_mutex_t	ft_find_mutex_right(t_fork_holder *fork_holder, int number)
 			last = node;
 			node = node->next;
 		}
-		right = (*last).mid;
+		return ((*last).mid);
 	}
 	else
 	{
@@ -46,9 +43,8 @@ pthread_mutex_t	ft_find_mutex_right(t_fork_holder *fork_holder, int number)
 		node = fork_holder;
 		while ((*node).number != number && node)
 			node = node->next;
-		right = (*node).mid;
+		return ((*node).mid);
 	}
-	return (right);
 }
 
 

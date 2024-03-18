@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:12:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/18 14:44:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:12:31 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_philo_list	*ft_create_philo_list(int total_number,
 	t_philo_list	*new;
 	t_philo_list	*old;
 	int				number;
+	
 
 	number = 0;
 	while (number < total_number)
