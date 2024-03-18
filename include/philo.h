@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/18 15:02:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:47:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ typedef struct s_fork_holder
 typedef struct s_philo_now
 {
 	int					number;
-	pthread_mutex_t		left;
-	pthread_mutex_t		right;
+	pthread_mutex_t		*left;
+	pthread_mutex_t		*right;
 	char				now;
 	long long			last_eat;
 	struct s_philo_now	*next;
@@ -79,7 +79,7 @@ void			ft_free_fork_holder(t_fork_holder *first);
 t_fork_holder	*ft_create_fork_holder(int total_number);
 long long		ft_timestamp_ms(void);
 void			ft_free_philo_now(t_philo_now *first);
-pthread_mutex_t	ft_find_mutex(t_fork_holder *fork_holder,
+pthread_mutex_t	*ft_find_mutex(t_fork_holder *fork_holder,
 					int number, char side);
 t_philo_now		*ft_create_philo_now(int total_number,
 					long long timestamp, t_fork_holder *fork_holder);

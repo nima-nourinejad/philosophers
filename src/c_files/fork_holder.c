@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:53:36 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/14 15:50:26 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:28:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_fork_holder	*ft_create_fork_holder_node(int number)
 {
 	t_fork_holder	*new;
-	pthread_mutex_t	mid;
 	int				error;
 
 	new = malloc(sizeof(t_fork_holder));
@@ -26,13 +25,12 @@ t_fork_holder	*ft_create_fork_holder_node(int number)
 	(*new).holder = -1;
 	new->next = 0;
 	new->pervious = 0;
-	error = pthread_mutex_init(&mid, 0);
+	error = pthread_mutex_init(&((*new).mid), 0);
 	if (error)
 	{
 		free(new);
 		return (0);
 	}
-	(*new).mid = mid;
 	(*new).mutex = 1;
 	return (new);
 }
