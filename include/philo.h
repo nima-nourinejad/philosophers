@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/15 11:01:30 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/18 14:26:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_philo_info
 	t_philo_now		*philo_now;
 	t_fork_holder	*fork_holder;
 	t_input			*input;
-	pthread_t		mid_ifo;
 }					t_philo_info;
 
 typedef struct s_philo_input

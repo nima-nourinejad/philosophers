@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:42:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/15 11:13:13 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/18 14:52:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	ft_free_philo_list(t_philo_list	*first)
 
 	ft_free_fork_holder((first->philo_info)->fork_holder);
 	ft_free_philo_now((first->philo_info)->philo_now);
-	//error = pthread_mutex_destroy(&((*philo_info).mid_ifo));
-			//if error
 	node = first;
 	while (node)
 	{

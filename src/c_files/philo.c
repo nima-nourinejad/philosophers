@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/15 11:17:00 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/18 14:52:50 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 
 void	*ft_philo(void *input)
 {
-	t_philo_now	*philo_now;
 	t_philo_now	*node;
 	int			number;
 	int			error1;
 	int			error2;
 
-	pthread_mutex_lock(&((*(((t_philo_input *)input)->philo_info)).mid_ifo));
-			//if error
-	philo_now = (((t_philo_input *)input)->philo_info)->philo_now;
 	number = (*((t_philo_input *)input)).number;
 	printf("we are in thread number %d\n", number);
-	node = philo_now;
+
+
+
+	node = (((t_philo_input *)input)->philo_info)->philo_now;
 	while (node && (*node).number != number)
 		node = node->next;
 	error1 = pthread_mutex_lock(&(*node).left);
 	error2 = pthread_mutex_lock(&(*node).right);
-	if (!error1 && !error2)
+	// if (!error1 && !error2)
 		printf("philo number %d is eating\n", (*node).number);
-	error1 = pthread_mutex_unlock(&(*node).left);
-	error2 = pthread_mutex_unlock(&(*node).right);
-	pthread_mutex_ulock(&((*(((t_philo_input *)input)->philo_info)).mid_ifo));
 	return (NULL);
 }
 
