@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 17:15:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/21 17:17:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_info	*ft_clean_info(t_info *node)
 {
 	ft_clean_info_node(node->info_lock, 1, node);
 	return (0);
-	
 }
 
 t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
