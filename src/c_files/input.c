@@ -5,34 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 10:31:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/14 11:10:01 by nnourine         ###   ########.fr       */
+/*   Created: 2024/03/21 13:37:19 by nnourine          #+#    #+#             */
+/*   Updated: 2024/03/21 16:02:45 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-t_input	ft_create_input(int argc, char **argv)
+t_input	*ft_clean_input(t_input *first)
 {
-	t_input	input;
-	int		error;
+	t_input	*node;
+	t_input	*temp;
 
-	if (argc != 5 && argc != 6)
-		ft_check_error_exit(1, "wrong number of arguments", 1);
-	input.number = ft_atoi_error (argv[1], &error);
-	ft_check_error_exit(error, "wrong format of number of philosophers", 1);
-	input.die = ft_atoi_error (argv[2], &error);
-	ft_check_error_exit(error, "wrong format of time to die", 1);
-	input.eat = ft_atoi_error (argv[3], &error);
-	ft_check_error_exit(error, "wrong format of time to eat", 1);
-	input.sleep = ft_atoi_error (argv[4], &error);
-	ft_check_error_exit(error, "wrong format of time to sleep", 1);
-	if (argc == 5)
-		input.times = -1;
-	else
+	node = first;
+	while (node)
 	{
-		input.times = ft_atoi_error (argv[5], &error);
-		ft_check_error_exit(error, "wrong format of number of times eat", 1);
+		temp = node->next;
+		free(node);
+		node = temp;
 	}
-	return (input);
+	return (0);
+}
+
+t_input	*ft_create_input_node(int number, t_info *info)
+{
+	t_input	*new;
+	t_philo	*philo_node;
+
+	new = malloc(sizeof(t_input));
+	if (!new)
+		return (0);
+	philo_node = info->philo;
+	while (*(philo_node->philo_num) != number
+		&& philo_node)
+		philo_node = philo_node->next;
+	new->thread_num = philo_node->philo_num;
+	new->info = info;
+	new->next = 0;
+	return (new);
+}
+
+t_input	*ft_create_input(int *total_number, t_info *info)
+{
+	t_input	*first;
+	t_input	*new;
+	t_input	*old;
+	int		number;
+
+	number = 0;
+	while (number < *total_number)
+	{
+		number++;
+		new = ft_create_input_node(number, info);
+		if (!new)
+			ft_clean_input(first);
+		if (number == 1)
+			first = new;
+		else
+			old->next = new;
+		old = new;
+	}
+	return (first);
 }

@@ -5,66 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/18 16:10:37 by nnourine         ###   ########.fr       */
+/*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
+/*   Updated: 2024/03/21 14:41:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-void	*ft_philo(void *input)
+t_philo	*ft_clean_philo_node(long long *last_eat, int *philo_num, t_philo *new)
 {
-	t_philo_now	*node;
-	int			number;
-	int			error1;
-	int			error2;
-
-	
-
-	number = (*((t_philo_input *)input)).number;
-	printf("we are in thread number %d\n", number);
-
-
-	if (number % 2 == 1)
-	{
-		//pthread_mutex_lock(&((*((t_philo_input *)input)->philo_info).l));
-		node = (((t_philo_input *)input)->philo_info)->philo_now;
-		while (node && (*node).number != number)
-			node = node->next;
-		error1 = pthread_mutex_lock(((*node).left));
-		if (!error1)
-			printf("philo number %d is hodling left fork\n", (*node).number);
-		error2 = pthread_mutex_lock(((*node).right));
-		if (!error2)
-			printf("philo number %d is hodling right fork\n", (*node).number);
-		if (!error1 && !error2)
-			printf("philo number %d is eating\n", (*node).number);
-		//	pthread_mutex_unlock(&((*((t_philo_input *)input)->philo_info).l));
-	}
-
-	
-	return (NULL);
+	if (last_eat)
+		free (last_eat);
+	if (philo_num)
+		free (philo_num);
+	if (new)
+		free (new);
+	return (0);
 }
 
-int	main(int argc, char **argv)
+t_philo	*ft_clean_philo(t_philo *first)
 {
-	t_input			input;
-	t_fork_holder	*fork_holder;
-	long long		timestamp;
-	t_philo_now		*philo_now;
-	t_philo_info	philo_info;
-	t_philo_list	*philo_list;
+	t_philo	*node;
+	t_philo	*temp;
 
-	input = ft_create_input(argc, argv);
-	fork_holder = ft_create_fork_holder(input.number);
-	timestamp = ft_timestamp_ms();
-	philo_now = ft_create_philo_now(input.number, timestamp, fork_holder);
-	if (!philo_now)
+	node = first;
+	while (node)
 	{
-		ft_free_fork_holder(fork_holder);
-		ft_check_error_exit(1, "Problem in creating philo now", 1);
+		temp = node->next;
+		ft_clean_philo_node(node->last_eat, node->philo_num, node);
+		node = temp;
 	}
-	philo_info = ft_create_philo_info(philo_now, fork_holder, &input);
-	philo_list = ft_create_philo_list(input.number, &philo_info);
-	ft_exit_success(philo_list);
+	return (0);
+}
+
+t_philo	*ft_create_philo_node(int number, long long timestamp,
+	t_fork *fork)
+{
+	t_philo		*new;
+	int			*philo_num;
+	long long	*last_eat;
+
+	new = malloc(sizeof(t_philo));
+	if (!new)
+		return (ft_clean_philo_node(0, 0 , 0));
+	last_eat = malloc(sizeof(long long));
+	if (!last_eat)
+		return (ft_clean_philo_node(0, 0, new));
+	*last_eat = timestamp;
+	philo_num = malloc(sizeof(int));
+	if (!philo_num)
+		return (ft_clean_philo_node(last_eat, 0, new));
+	*philo_num = number;
+	new->philo_num = philo_num;
+	new->last_eat = last_eat;
+	new->left_fork = ft_find_fork(fork, number, 'l');
+	new->right_fork = ft_find_fork(fork, number, 'r');
+	new->next = 0;
+	return (new);
+}
+
+t_philo	*ft_create_philo(int *total_number, long long timestamp,
+	t_fork *fork)
+{
+	t_philo	*first;
+	t_philo	*new;
+	t_philo	*old;
+	int		number;
+
+	number = 0;
+	while (number < *total_number)
+	{
+		number++;
+		new = ft_create_philo_node(number, timestamp, fork);
+		if (!new)
+		{
+			ft_clean_philo(first);
+			return (0);
+		}
+		if (number == 1)
+			first = new;
+		else
+			old->next = new;
+		old = new;
+	}
+	return (first);
 }

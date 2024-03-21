@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/14 16:43:58 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/21 15:16:52 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ NAME = philo
 # Compiler and flags
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -o2 
 ADDRESS_SANITIZE = -fsanitize=address
 THREAD_SANITIZE = -fsanitize=thread
 LLDB = -g
-PTHREAD = -lpthread
+PTHREAD = -pthread
 
 # Directories
 SRCDIR = src/c_files
@@ -33,17 +33,17 @@ INCDIR = include
 # Files
 SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/putstr_fd.c \
-		$(SRCDIR)/fork_holder.c \
-		$(SRCDIR)/input.c \
-		$(SRCDIR)/philo_info.c \
-		$(SRCDIR)/philo_list.c \
-		$(SRCDIR)/fork.c \
-		$(SRCDIR)/philo_now.c \
+		$(SRCDIR)/print_error.c \
 		$(SRCDIR)/strncmp.c \
 		$(SRCDIR)/timestamp_ms.c \
-		$(SRCDIR)/clean.c \
-		$(SRCDIR)/exit.c \
-		$(SRCDIR)/$(NAME).c
+		$(SRCDIR)/find_fork.c \
+		$(SRCDIR)/data.c \
+		$(SRCDIR)/fork.c \
+		$(SRCDIR)/philo.c \
+		$(SRCDIR)/info.c \
+		$(SRCDIR)/input.c \
+		$(SRCDIR)/thread.c \
+		$(SRCDIR)/main.c
 		
 OBJS = $(SRCS:.c=.o)
 
