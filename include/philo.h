@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 16:02:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:25:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_philo
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	long long			*last_eat;
+	int					*times_eat;
 	struct s_philo		*next;
 }						t_philo;
 
@@ -53,8 +54,8 @@ typedef struct s_info
 
 typedef struct s_input
 {
-	t_info			*info;
 	int				*thread_num;
+	t_info			*info;
 	struct s_input	*next;
 }					t_input;
 

@@ -6,16 +6,19 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 14:41:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:48:40 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-t_philo	*ft_clean_philo_node(long long *last_eat, int *philo_num, t_philo *new)
+t_philo	*ft_clean_philo_node(long long *last_eat, int *times_eat,
+	int *philo_num, t_philo *new)
 {
 	if (last_eat)
 		free (last_eat);
+	if (times_eat)
+		free (times_eat);
 	if (philo_num)
 		free (philo_num);
 	if (new)
@@ -32,7 +35,8 @@ t_philo	*ft_clean_philo(t_philo *first)
 	while (node)
 	{
 		temp = node->next;
-		ft_clean_philo_node(node->last_eat, node->philo_num, node);
+		ft_clean_philo_node(node->last_eat, node->times_eat,
+			node->philo_num, node);
 		node = temp;
 	}
 	return (0);
@@ -43,21 +47,27 @@ t_philo	*ft_create_philo_node(int number, long long timestamp,
 {
 	t_philo		*new;
 	int			*philo_num;
+	int			*times_eat;
 	long long	*last_eat;
 
 	new = malloc(sizeof(t_philo));
 	if (!new)
-		return (ft_clean_philo_node(0, 0 , 0));
+		return (ft_clean_philo_node(0, 0, 0, 0));
 	last_eat = malloc(sizeof(long long));
 	if (!last_eat)
-		return (ft_clean_philo_node(0, 0, new));
+		return (ft_clean_philo_node(0, 0, 0, new));
 	*last_eat = timestamp;
 	philo_num = malloc(sizeof(int));
 	if (!philo_num)
-		return (ft_clean_philo_node(last_eat, 0, new));
+		return (ft_clean_philo_node(last_eat, 0, 0, new));
 	*philo_num = number;
+	times_eat = malloc(sizeof(int));
+	if (!times_eat)
+		return (ft_clean_philo_node(last_eat, 0, philo_num, new));
+	*times_eat = 0;
 	new->philo_num = philo_num;
 	new->last_eat = last_eat;
+	new->times_eat = times_eat;
 	new->left_fork = ft_find_fork(fork, number, 'l');
 	new->right_fork = ft_find_fork(fork, number, 'r');
 	new->next = 0;
