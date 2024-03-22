@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 13:12:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 16:05:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/22 12:50:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_thread	*ft_create_thread(int *total_number, t_input *input)
 	int			number;
 	int			error;
 
-	error = pthread_mutex_lock((input->info)->info_lock);
+	error = pthread_mutex_lock((input->info)->start_lock);
 	if (error)
 		return (0);
 	number = 0;
@@ -97,7 +97,7 @@ t_thread	*ft_create_thread(int *total_number, t_input *input)
 			old->next = new;
 		old = new;
 	}
-	error = pthread_mutex_unlock((input->info)->info_lock);
+	error = pthread_mutex_unlock((input->info)->start_lock);
 	if (error)
 	{
 		ft_clean_thread(first);

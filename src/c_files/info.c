@@ -6,54 +6,81 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 17:17:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:24:37 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-t_info	*ft_clean_info_node(pthread_mutex_t *lock, int destroy, t_info *new)
+t_info	*ft_clean_info_node(pthread_mutex_t *start_lock, int destroy_start,
+	pthread_mutex_t *print_lock, int destroy_print)
 {
 	int	error;
 
-	if (lock && destroy == 1)
+	if (start_lock && destroy_start == 1)
 	{
-		error = pthread_mutex_destroy(lock);
+		error = pthread_mutex_destroy(start_lock);
 		if (error)
 			ft_print_error("Mutex (info) destroy problem");
-		free (lock);
+		free (start_lock);
 	}
-	if (lock && destroy == 0)
-		free (lock);
-	if (new)
-		free (new);
+	if (start_lock && destroy_start == 0)
+		free (start_lock);
+	if (print_lock && destroy_print == 1)
+	{
+		error = pthread_mutex_destroy(print_lock);
+		if (error)
+			ft_print_error("Mutex (info) destroy problem");
+		free (print_lock);
+	}
+	if (print_lock && destroy_print == 0)
+		free (print_lock);
 	return (0);
 }
 
 t_info	*ft_clean_info(t_info *node)
 {
-	ft_clean_info_node(node->info_lock, 1, node);
+	ft_clean_info_node(node->start_lock, 1, node->print_lock, 1);
+	free(node->dead);
+	free (node);
 	return (0);
 }
 
 t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 {
-	pthread_mutex_t	*info_lock;
+	pthread_mutex_t	*start_lock;
+	pthread_mutex_t	*print_lock;
+	int				*dead;
 	int				error;
 	t_info			*info;
 
-	info_lock = malloc(sizeof(pthread_mutex_t));
-	if (!info_lock)
-		return (ft_clean_info_node(0, 0, 0));
-	error = pthread_mutex_init(info_lock, 0);
+	start_lock = malloc(sizeof(pthread_mutex_t));
+	if (!start_lock)
+		return (ft_clean_info_node(0, 0, 0, 0));
+	print_lock = malloc(sizeof(pthread_mutex_t));
+	if (!print_lock)
+		return (ft_clean_info_node(start_lock, 0, 0, 0));
+	error = pthread_mutex_init(start_lock, 0);
 	if (error)
-		return (ft_clean_info_node(info_lock, 0, 0));
+		return (ft_clean_info_node(start_lock, 0, print_lock, 0));
+	error = pthread_mutex_init(print_lock, 0);
+	if (error)
+		return (ft_clean_info_node(print_lock, 1, print_lock, 0));
+	dead = malloc(sizeof(int));
+	if(!dead)
+		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
+	*dead = 0;
 	info = malloc(sizeof(t_info));
 	if (!info)
-		return (ft_clean_info_node(info_lock, 1, 0));
+	{
+		free (dead);
+		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
+	}
 	info->philo = philo;
 	info->fork = fork;
 	info->data = data;
-	info->info_lock = info_lock;
+	info->start_lock = start_lock;
+	info->print_lock = print_lock;
+	info->dead = dead;
 	return (info);
 }
