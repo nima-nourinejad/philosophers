@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 16:05:43 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:48:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,22 @@ int	main(int argc, char **argv)
 	t_input		*input;
 	t_thread	*thread;
 
+	if (argc != 5 && argc != 6)
+	{
+		ft_print_error("wrong number of arguments");
+		exit (0);
+	}
 	data = ft_create_data(argc, argv);
 	if (!data)
 	{
-		ft_print_error("Problem in creating data");
+		ft_print_error("Problem in processing the user inputs");
 		return (EXIT_FAILURE);
 	}
 	fork = ft_create_fork(data->value);
 	if (!fork)
 	{
 		ft_clean_data(data);
-		ft_print_error("Problem in creating fork");
+		ft_print_error("Problem in creating the list of forks");
 		return (EXIT_FAILURE);
 	}
 	timestamp = ft_timestamp_ms();
@@ -75,7 +80,7 @@ int	main(int argc, char **argv)
 	{
 		ft_clean_fork(fork);
 		ft_clean_data(data);
-		ft_print_error("Problem in creating philo");
+		ft_print_error("Problem in creating the list of philosophers");
 		return (EXIT_FAILURE);
 	}
 	info = ft_create_info(philo, fork, data);
@@ -84,7 +89,7 @@ int	main(int argc, char **argv)
 		ft_clean_philo(philo);
 		ft_clean_fork(fork);
 		ft_clean_data(data);
-		ft_print_error("Problem in creating info");
+		ft_print_error("Problem in creating the information package");
 		return (EXIT_FAILURE);
 	}
 	input = ft_create_input(data->value, info);
@@ -94,7 +99,7 @@ int	main(int argc, char **argv)
 		ft_clean_philo(philo);
 		ft_clean_fork(fork);
 		ft_clean_data(data);
-		ft_print_error("Problem in creating input");
+		ft_print_error("Problem in creating the list of thread inputs");
 		return (EXIT_FAILURE);
 	}
 	thread = ft_create_thread(data->value, input);
@@ -105,7 +110,7 @@ int	main(int argc, char **argv)
 		ft_clean_philo(philo);
 		ft_clean_fork(fork);
 		ft_clean_data(data);
-		ft_print_error("Problem in creating thread");
+		ft_print_error("Problem in creating the list of threads");
 		return (EXIT_FAILURE);
 	}
 	ft_clean_thread(thread);

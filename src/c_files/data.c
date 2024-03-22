@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:31:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 17:03:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:44:35 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,21 +71,19 @@ t_data	*ft_create_data(int argc, char **argv)
 	t_data	*old;
 	int		number;
 
-	if (argc != 5 && argc != 6)
-	{
-		ft_print_error("wrong number of arguments");
-		exit (0);
-	}
 	number = 0;
 	while (number < 5)
 	{
 		number++;
 		if (number == 5 && argc == 5)
-			new = ft_create_data_node(number, "-1");
+		{
+			new = ft_create_data_node(number, "1");
+			*(new->value) = -1;
+		}
 		else
 			new = ft_create_data_node(number, argv[number]);
 		if (!new)
-			ft_clean_data(first);
+			return (ft_clean_data(first));
 		if (number == 1)
 			first = new;
 		else

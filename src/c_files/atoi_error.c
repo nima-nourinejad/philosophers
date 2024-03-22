@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 13:33:54 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 17:01:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:42:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,29 +54,18 @@ static int	ft_strnbr(char *s)
 
 int	ft_atoi_error(char *str, int *error)
 {
-	int		sign;
-	int		n;
-
-	sign = 1;
 	*error = 0;
-	if (ft_strncmp(str, "-2147483648", 12) == 0)
-		return (-2147483648);
-	if (*str == '+' || *str == '-' )
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	if (*str == '\0')
+	if (*str == '\0' || *str == '-' || *str == '0')
 	{
 		*error = 1;
 		return (0);
 	}
+	if (*str == '+')
+		str++;
 	if (ft_check(str) == 1)
 	{
 		*error = 1;
 		return (0);
 	}
-	n = ft_strnbr(str) * sign;
-	return (n);
+	return (ft_strnbr(str));
 }
