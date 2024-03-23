@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/22 13:07:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/23 11:32:16 by nima             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,24 @@ long long	ft_timestamp_micro(void)
 	return (timestamp);
 }
 
-int	ft_wait_ms(int time_ms)
+int	ft_wait_ms(int time_ms, long long timestamp, int number,
+	char *str, t_info *info)
 {
-	long long		start;
 	long long		current;
 	long long		end;
 
+	ft_lock_print(timestamp, number, str, info);
 	if (time_ms <= 0)
 		return (0);
-	start = ft_timestamp_micro();
-	if (start == -1)
+	current = ft_timestamp_ms();
+	if (current == -1)
 		return (-1);
-	end = start + (time_ms * 1000);
-	current = start;
+	end = timestamp + time_ms;
 	while (current < end)
 	{
 		if (usleep(1) == -1)
 			return (-1);
-		current = ft_timestamp_micro();
+		current = ft_timestamp_ms();
 		if (current == -1)
 			return (-1);
 	}

@@ -6,7 +6,7 @@
 /*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/23 10:51:22 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/23 11:33:53 by nima             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,9 @@ t_input			*ft_clean_input(t_input *first);
 t_input			*ft_create_input(int *total_number, t_info *info);
 t_thread		*ft_clean_thread(t_thread *first);
 t_thread		*ft_create_thread(int *total_number, t_input *input);
-int				ft_wait_ms(int time_ms);
-int				ft_lock_print(long long timestamp, int number, char *str, t_info *info);
+int				ft_wait_ms(int time_ms, long long timestamp, int number,
+					char *str, t_info *info);
+int				ft_lock_print(long long timestamp, int number,
+					char *str, t_info *info);
 
 #endif // PHILO_H
