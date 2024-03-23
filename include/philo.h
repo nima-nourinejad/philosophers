@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/22 17:06:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:51:22 by nima             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,26 @@ typedef struct s_philo
 	struct s_philo		*next;
 }						t_philo;
 
+typedef struct s_script
+{
+	long long		*time;
+	int				*number;
+	int				*type;
+	struct s_script	*next;
+}				t_script;
+
+typedef struct s_print
+{
+	t_script	*death;
+	t_script	*other;
+}				t_print;
+
 typedef struct s_info
 {
 	t_philo			*philo;
 	t_fork			*fork;
 	t_data			*data;
+	t_print			*print;
 	int				*dead;
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
@@ -65,7 +80,13 @@ typedef struct s_thread
 {
 	pthread_t			*thread;
 	struct s_thread		*next;
-}							t_thread;
+}						t_thread;
+
+typedef struct s_utility
+{
+	pthread_t	*printer;
+	pthread_t	*check;
+}				t_utility;
 
 void			ft_putstr_fd(char *s, int fd);
 void			*ft_philo(void *input);
