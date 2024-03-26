@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nima <nnourine@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/23 11:33:53 by nima             ###   ########.fr       */
+/*   Updated: 2024/03/26 09:06:20 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int				ft_wait_ms(int time_ms, long long timestamp, int number,
 					char *str, t_info *info);
 int				ft_lock_print(long long timestamp, int number,
 					char *str, t_info *info);
+int				ft_only_wait_ms(int time_ms);
 
 #endif // PHILO_H
