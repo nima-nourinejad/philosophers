@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 11:41:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:26:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ t_philo	*ft_create_philo_node(int number, long long timestamp,
 	if (!last_eat)
 		return (ft_clean_philo_node(0, 0, 0, new));
 	*last_eat = timestamp;
+	*last_eat = 0;
+	// (void)timestamp;
 	philo_num = malloc(sizeof(int));
 	if (!philo_num)
 		return (ft_clean_philo_node(last_eat, 0, 0, new));

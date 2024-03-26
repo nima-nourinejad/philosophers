@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/22 15:24:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:53:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_info	*ft_clean_info(t_info *node)
 {
 	ft_clean_info_node(node->start_lock, 1, node->print_lock, 1);
 	free(node->dead);
+	free(node->start_time);
 	free (node);
 	return (0);
 }
@@ -50,6 +51,7 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 {
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
+	long long		*start_time;
 	int				*dead;
 	int				error;
 	t_info			*info;
@@ -67,18 +69,22 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 	if (error)
 		return (ft_clean_info_node(print_lock, 1, print_lock, 0));
 	dead = malloc(sizeof(int));
-	if(!dead)
+	if (!dead)
 		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
 	*dead = 0;
+	start_time = malloc(sizeof(long long));
+	*start_time = ft_timestamp_ms();
 	info = malloc(sizeof(t_info));
 	if (!info)
 	{
 		free (dead);
+		free (start_time);
 		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
 	}
 	info->philo = philo;
 	info->fork = fork;
 	info->data = data;
+	info->start_time = start_time;
 	info->start_lock = start_lock;
 	info->print_lock = print_lock;
 	info->dead = dead;

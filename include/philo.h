@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 11:33:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 15:25:11 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_info
 	t_data			*data;
 	t_print			*print;
 	int				*dead;
+	long long		*start_time;
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
 }					t_info;
@@ -111,8 +112,8 @@ t_thread		*ft_clean_thread(t_thread *first);
 t_thread		*ft_create_thread(int *total_number, t_input *input);
 int				ft_wait_ms(int time_ms, long long timestamp, int number,
 					char *str, t_info *info);
-int				ft_lock_print(long long timestamp, int number,
-					char *str, t_info *info);
+int				ft_lock_print(long long start, long long timestamp,
+					int number, char *str, t_info *info);
 int				ft_only_wait_ms(int time_ms);
 
 #endif // PHILO_H
