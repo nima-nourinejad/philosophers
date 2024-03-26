@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/22 15:30:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:41:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,16 @@ t_philo	*ft_clean_philo(t_philo *first)
 {
 	t_philo	*node;
 	t_philo	*temp;
+	int		error;
 
 	node = first;
 	while (node)
 	{
 		temp = node->next;
+		error = pthread_mutex_destroy(node->philo_lock);
+		if (error)
+			ft_print_error("Mutex (philo) destroy problem");
+		free (node->philo_lock);
 		ft_clean_philo_node(node->last_eat, node->times_eat,
 			node->philo_num, node);
 		node = temp;
@@ -45,10 +50,12 @@ t_philo	*ft_clean_philo(t_philo *first)
 t_philo	*ft_create_philo_node(int number, long long timestamp,
 	t_fork *fork)
 {
-	t_philo		*new;
-	int			*philo_num;
-	int			*times_eat;
-	long long	*last_eat;
+	t_philo			*new;
+	int				*philo_num;
+	int				*times_eat;
+	long long		*last_eat;
+	pthread_mutex_t	*lock;
+	int				error;
 
 	new = malloc(sizeof(t_philo));
 	if (!new)
@@ -65,7 +72,17 @@ t_philo	*ft_create_philo_node(int number, long long timestamp,
 	if (!times_eat)
 		return (ft_clean_philo_node(last_eat, 0, philo_num, new));
 	*times_eat = 0;
+	lock = malloc(sizeof(pthread_mutex_t));
+	if (!lock)
+		return (ft_clean_philo_node (last_eat, times_eat, philo_num, new));
+	error = pthread_mutex_init(lock, 0);
+	if (error)
+	{
+		free (lock);
+		return (ft_clean_philo_node (last_eat, times_eat, philo_num, new));
+	}
 	new->philo_num = philo_num;
+	new->philo_lock = lock;
 	new->last_eat = last_eat;
 	new->times_eat = times_eat;
 	new->left_fork = ft_find_fork(fork, number, 'l');

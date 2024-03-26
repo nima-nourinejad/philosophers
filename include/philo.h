@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 09:06:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 11:33:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int					*philo_num;
+	pthread_mutex_t		*philo_lock;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
 	long long			*last_eat;

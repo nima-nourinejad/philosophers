@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 11:11:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/26 12:40:01 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	*ft_philo(void *input)
 	int		error1;
 	int		error2;
 	long long t;
+	int	repeat;
 
 	error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 	error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
@@ -34,19 +35,31 @@ void	*ft_philo(void *input)
 	times = (((((((t_input *)input)->info)->data)->next)->next)->next)->next;
 	while (*(philo_node->philo_num) != thread_num)
 		philo_node = philo_node->next;
-	
-	while (((*(philo_node->times_eat) < *(times->value)) || *(times->value) == -1) && *((((t_input *)input)->info)->dead) == 0)
+	error1 = pthread_mutex_lock(philo_node->philo_lock);
+	repeat = *(philo_node->times_eat);
+	error1 = pthread_mutex_unlock(philo_node->philo_lock);
+	while (((repeat < *(times->value)) || *(times->value) == -1))
 	{
-		if (((*(philo_node->times_eat) < *(times->value)) || *(times->value) == -1) && thread_num % 2 == 0)
+		error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
+		if (*((((t_input *)input)->info)->dead) == 1)
 		{
-			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
-			if (*((((t_input *)input)->info)->dead) == 1)
-				break ;
 			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+			break ;
+		}
+		else
+			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+		if (thread_num % 2 == 0)
+		{
 			t = ft_timestamp_ms();
 			ft_wait_ms(*(eat->value), t, thread_num, "is thinking", ((t_input *)input)->info);
+			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 			if (*((((t_input *)input)->info)->dead) == 1)
+			{
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 				break ;
+			}
+			else
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 			error1 = pthread_mutex_lock((philo_node->left_fork));
 			if (!error1)
 			{
@@ -59,41 +72,44 @@ void	*ft_philo(void *input)
 				t = ft_timestamp_ms();
 				ft_wait_ms(0, t, thread_num, "is taken a fork", ((t_input *)input)->info);
 			}
-			if (!error1 && !error2 && *((((t_input *)input)->info)->dead) == 0)
+			if (!error1 && !error2)
 			{
 				t = ft_timestamp_ms();
-				//ft_lock_print(t, thread_num, "is eating", ((t_input *)input)->info);
+				error1 = pthread_mutex_lock(philo_node->philo_lock);
+				*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
+				*(philo_node->last_eat) = ft_timestamp_ms();
+				error1 = pthread_mutex_unlock(philo_node->philo_lock);
 				ft_wait_ms(*(eat->value), t, thread_num, "is eating", ((t_input *)input)->info);
 			}
-			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
-			*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
-			*(philo_node->last_eat) = ft_timestamp_ms();
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			//ft_wait_ms(*(eat->value));
 			error1 = pthread_mutex_unlock((philo_node->left_fork));
 			error2 = pthread_mutex_unlock((philo_node->right_fork));
 			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 			if (*((((t_input *)input)->info)->dead) == 1)
+			{
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 				break ;
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			if (!error1 && !error2 && *((((t_input *)input)->info)->dead) == 0)
+			}
+			else
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+			if (!error1 && !error2)
 			{
 				t = ft_timestamp_ms();
 				ft_wait_ms(*(sleep->value), t, thread_num, "is sleeping", ((t_input *)input)->info);
-				//ft_lock_print(t, thread_num, "is sleeping", ((t_input *)input)->info);
 			}
-			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
-			if (*((((t_input *)input)->info)->dead) == 1)
-				break ;
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			//ft_wait_ms(*(sleep->value));
+			error1 = pthread_mutex_lock(philo_node->philo_lock);
+			repeat = *(philo_node->times_eat);
+			error1 = pthread_mutex_unlock(philo_node->philo_lock);
 		}
-		if (((*(philo_node->times_eat) < *(times->value)) || *(times->value) == -1) && thread_num % 2 == 1)
+		if (thread_num % 2 == 1)
 		{
 			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 			if (*((((t_input *)input)->info)->dead) == 1)
+			{
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 				break ;
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+			}
+			else
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 			error1 = pthread_mutex_lock((philo_node->left_fork));
 			if (!error1)
 			{
@@ -106,44 +122,43 @@ void	*ft_philo(void *input)
 				t = ft_timestamp_ms();
 				ft_wait_ms(0, t, thread_num, "is taken a fork", ((t_input *)input)->info);
 			}
-			if (!error1 && !error2 && *((((t_input *)input)->info)->dead) == 0)
+			if (!error1 && !error2)
 			{
 				t = ft_timestamp_ms();
-				//ft_lock_print(t, thread_num, "is eating", ((t_input *)input)->info);
+				error1 = pthread_mutex_lock(philo_node->philo_lock);
+				*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
+				*(philo_node->last_eat) = ft_timestamp_ms();
+				error1 = pthread_mutex_unlock(philo_node->philo_lock);
 				ft_wait_ms(*(eat->value), t, thread_num, "is eating", ((t_input *)input)->info);
 			}
-			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
-			*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
-			*(philo_node->last_eat) = ft_timestamp_ms();
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			//ft_wait_ms(*(eat->value));
 			error1 = pthread_mutex_unlock((philo_node->left_fork));
-			t = ft_timestamp_ms();
-			ft_wait_ms(0, t, thread_num, "is put a fork down", ((t_input *)input)->info);
 			error2 = pthread_mutex_unlock((philo_node->right_fork));
-			t = ft_timestamp_ms();
-			ft_wait_ms(0, t, thread_num, "is put a fork down", ((t_input *)input)->info);
 			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 			if (*((((t_input *)input)->info)->dead) == 1)
+			{
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 				break ;
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			if (!error1 && !error2 && *((((t_input *)input)->info)->dead) == 0)
+			}
+			else
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+			if (!error1 && !error2)
 			{
 				t = ft_timestamp_ms();
 				ft_wait_ms(*(sleep->value), t, thread_num, "is sleeping", ((t_input *)input)->info);
-				//ft_lock_print(t, thread_num, "is sleeping", ((t_input *)input)->info);
 			}
 			error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
 			if (*((((t_input *)input)->info)->dead) == 1)
-				break ;
-			error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-			//ft_wait_ms(*(sleep->value));
-			if (*((((t_input *)input)->info)->dead) == 0)
 			{
-				t = ft_timestamp_ms();
-				ft_wait_ms(*(eat->value), t, thread_num, "is thinking", ((t_input *)input)->info);
-				//ft_lock_print(t, thread_num, "is thinking", ((t_input *)input)->info);
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+				break ;
 			}
+			else
+				error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
+			t = ft_timestamp_ms();
+			ft_wait_ms(*(eat->value), t, thread_num, "is thinking", ((t_input *)input)->info);
+			error1 = pthread_mutex_lock(philo_node->philo_lock);
+			repeat = *(philo_node->times_eat);
+			error1 = pthread_mutex_unlock(philo_node->philo_lock);
 		}
 	}
 	return (NULL);
@@ -154,45 +169,46 @@ void	*ft_check_dead(void *info)
 	long long	current;
 	int			error;
 	int			die;
+	int			dead;
 	t_data		*times;
 	int			not_eat;
 	int			sum;
 	int 		philo_num;
+	int 		repeat;
 
 	error = pthread_mutex_lock(((t_info *)info)->start_lock);
+	dead = *(((t_info *)info)->dead);
+	error = pthread_mutex_unlock(((t_info *)info)->start_lock);
 	die = *(((((t_info *)info)->data)->next)->value);
 	times = ((((((t_info *)info)->data)->next)->next)->next)->next;
 	philo_num = *((((t_info *)info)->data)->value);
-	error = pthread_mutex_unlock(((t_info *)info)->start_lock);
-	while (*(((t_info *)info)->dead) == 0)
+	while (!dead)
 	{
 		sum = 0;
 		current = ft_timestamp_ms();
 		philo_node = ((t_info *)info)->philo;
 		while (philo_node)
 		{
-			error = pthread_mutex_lock(((t_info *)info)->start_lock);
+			error = pthread_mutex_lock(philo_node->philo_lock);
 			if ((((*(philo_node->times_eat)) >= (*(times->value)))))
 				sum++;
 			not_eat = (int)(current - *(philo_node->last_eat));
-			//printf("not eat of philo %d is %d\n", *(philo_node->philo_num), not_eat);
-			if (((*(philo_node->times_eat) < *(times->value)) || *(times->value) == -1) && not_eat > die)
+			repeat = *(philo_node->times_eat);
+			error = pthread_mutex_unlock(philo_node->philo_lock);
+			if (((repeat < *(times->value)) || *(times->value) == -1) && not_eat > die)
 			{
+				error = pthread_mutex_lock(((t_info *)info)->start_lock);
 				*(((t_info *)info)->dead) = 1;
+				dead = 1;
+				error = pthread_mutex_unlock(((t_info *)info)->start_lock);
 				ft_lock_print(current, *(philo_node->philo_num), "is dead", (t_info *)info);
-				//printf("not eat is %d\n", not_eat);
 				break ;
 			}
-			error = pthread_mutex_unlock(((t_info *)info)->start_lock);
 			philo_node = philo_node->next;
 		}
 		if (sum >= philo_num)
-		{
-			// current = ft_timestamp_ms();
-			// ft_lock_print(current, 0, "philo left hungry", (t_info *)info);
 			break ;
-		}
-		ft_only_wait_ms(1000);
+		ft_only_wait_ms(1);
 	}
 	return (NULL);
 }
