@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/27 10:00:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:39:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,7 @@ void	*ft_philo(void *input)
 			error1 = pthread_mutex_unlock(philo_node->philo_lock);
 			ft_wait_ms(*(eat->value), t, thread_num, "is eating", ((t_input *)input)->info);
 		}
-		error1 = pthread_mutex_unlock((philo_node->left_fork));
-		error2 = pthread_mutex_unlock((philo_node->right_fork));
-		if (!error1 && !error2)
-		{
-			t = ft_timestamp_ms() - start_time;	
-			ft_wait_ms(*(sleep->value), t, thread_num, "is sleeping", ((t_input *)input)->info);
-		}
+		finish = ft_sleep(input, thread_num, finish);
 		finish = ft_think(0, input, thread_num, finish);
 	}
 	return (NULL);
