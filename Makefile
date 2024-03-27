@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/22 13:02:39 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/27 09:19:04 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/info.c \
 		$(SRCDIR)/input.c \
 		$(SRCDIR)/thread.c \
+		$(SRCDIR)/is_dead.c \
 		$(SRCDIR)/main.c
 		
 OBJS = $(SRCS:.c=.o)

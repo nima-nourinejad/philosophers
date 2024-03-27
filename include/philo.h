@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/27 09:08:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:19:34 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ int				ft_lock_print(long long start, long long timestamp,
 int				ft_lock_print_dead(long long start, long long timestamp,
 					int number, char *str, t_info *info);
 int				ft_only_wait_ms(int time_ms);
+int				ft_is_dead(void *input);
 
 #endif // PHILO_H
