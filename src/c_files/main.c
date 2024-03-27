@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 16:51:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:07:39 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	*ft_check_dead(void *info)
 				*(((t_info *)info)->dead) = 1;
 				dead = 1;
 				error = pthread_mutex_unlock(((t_info *)info)->start_lock);
-				ft_lock_print(start_time ,current, *(philo_node->philo_num), "is dead", (t_info *)info);
+				ft_lock_print_dead(start_time ,current, *(philo_node->philo_num), "is dead", (t_info *)info);
 				break ;
 			}
 			philo_node = philo_node->next;
