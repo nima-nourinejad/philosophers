@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/27 09:35:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/27 10:00:07 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,9 @@ void	*ft_philo(void *input)
 	error1 = pthread_mutex_unlock(philo_node->philo_lock);
 	if (*(times->value) == 0)
 		return (NULL);
-	if (thread_num % 2 == 0)
-	{
-		t = ft_timestamp_ms() - start_time;
-		ft_wait_ms(1, t, thread_num, "is thinking", ((t_input *)input)->info);
-	}
 	finish = 0;
+	if (thread_num % 2 == 0)
+		finish = ft_think(1, input, thread_num, finish);
 	while (!finish || (*(times->value)) == -1)
 	{
 		if (ft_is_dead(input))
@@ -84,13 +81,7 @@ void	*ft_philo(void *input)
 			t = ft_timestamp_ms() - start_time;	
 			ft_wait_ms(*(sleep->value), t, thread_num, "is sleeping", ((t_input *)input)->info);
 		}
-		if (!finish)
-		{
-			t = ft_timestamp_ms() - start_time;
-			if (ft_is_dead(input))
-				break;
-			ft_wait_ms(0, t, thread_num, "is thinking", ((t_input *)input)->info);
-		}
+		finish = ft_think(0, input, thread_num, finish);
 	}
 	return (NULL);
 }
