@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/28 14:03:07 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/28 15:09:32 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/fork.c \
 		$(SRCDIR)/philo.c \
 		$(SRCDIR)/info.c \
+		$(SRCDIR)/utility.c \
 		$(SRCDIR)/input.c \
 		$(SRCDIR)/thread.c \
 		$(SRCDIR)/thread_cycle.c \
