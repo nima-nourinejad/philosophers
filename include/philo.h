@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 12:02:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:02:02 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ typedef struct s_utility
 }				t_utility;
 
 void			ft_putstr_fd(char *s, int fd);
-void			*ft_philo(void *input);
+void			*ft_philo_cycle(void *input);
+void			*ft_check_dead(void *info);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi_error(char *str, int *error);
 void			ft_print_error(char *error_message);
@@ -118,7 +119,6 @@ int				ft_lock_print(long long start, long long timestamp,
 int				ft_lock_print_dead(long long start, long long timestamp,
 					int number, char *str, t_info *info);
 int				ft_only_wait_ms(int time_ms);
-int				ft_only_wait_micro(int time_micro);
 int				ft_is_dead(void *input);
 int				ft_think(void *input, int thread_num, int finish);
 int				ft_eat_sleep(void *input, int thread_num, int finish);
