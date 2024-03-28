@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 11:06:02 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:28:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	*ft_philo(void *input)
 	total_number = *(((((t_input *)input)->info)->data)->value);
 	if (thread_num % 2 == 0 || (thread_num == total_number && total_number % 2 != 0))
 	{
-		ft_think(0, input, thread_num, finish);
+		finish = ft_think(input, thread_num, finish);
 		error1 = pthread_mutex_lock(((((t_input *)input)->info)->first_lock));
 		error1 = pthread_mutex_unlock(((((t_input *)input)->info)->first_lock));
 	}
-	while (!finish || (*(times->value)) == -1)
+	while (!finish)
 	{
 		if (ft_is_dead(input))
 			break;
@@ -73,13 +73,13 @@ void	*ft_philo(void *input)
 			*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
 			*(philo_node->last_eat) = ft_timestamp_ms() - start_time;
 			repeat = *(philo_node->times_eat);
-			if (repeat >= *(times->value))
+			if (repeat >= *(times->value) && (*(times->value)) != -1)
 				finish = 1;
 			error1 = pthread_mutex_unlock(philo_node->philo_lock);
 			ft_wait_ms(*(eat->value), t, thread_num, "is eating", ((t_input *)input)->info);
 		}
 		finish = ft_sleep(input, thread_num, finish);
-		finish = ft_think(0, input, thread_num, finish);
+		finish = ft_think(input, thread_num, finish);
 	}
 	return (NULL);
 }
