@@ -6,13 +6,13 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:44:20 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 14:30:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:47:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-int ft_check_dead_once(t_info *info, long long current,
+int	ft_check_dead_once(t_info *info, long long current,
 	t_philo *philo_node, int *sum)
 {
 	int		die;
@@ -59,7 +59,6 @@ int	ft_check_dead_full(t_info *info, long long current)
 		return (1);
 	return (0);
 }
-
 
 void	*ft_check_dead(void *info)
 {

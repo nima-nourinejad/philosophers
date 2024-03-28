@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:01:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 13:04:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:48:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 	while (*(philo_node->philo_num) != thread_num)
 		philo_node = philo_node->next;
 	eat_time = *((((((t_input *)input)->info)->data)->next)->next->value);
-	eat_times = *((((((((t_input *)input)->info)->data)->next)->next)->next)->next->value);
+	eat_times = *((((((((t_input *)input)->info)->data)
+						->next)->next)->next)->next->value);
 	if (ft_is_dead(input))
 		return (1);
 	error = pthread_mutex_lock(philo_node->left_fork);

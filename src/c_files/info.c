@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 15:56:28 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:48:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_info	*ft_clean_info(t_info *node)
 	return (0);
 }
 
-t_info	*ft_create_info_node(t_philo *philo, t_fork *fork, t_data *data, long long start)
+t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
+	t_data *data, long long start)
 {
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;

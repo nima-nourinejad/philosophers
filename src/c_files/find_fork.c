@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:15:13 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/21 12:14:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:48:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ pthread_mutex_t	*ft_find_fork_right(t_fork *fork, int number)
 		return (ft_find_fork_left(fork, number));
 	}
 }
-
 
 pthread_mutex_t	*ft_find_fork(t_fork *fork, int number, char side)
 {
