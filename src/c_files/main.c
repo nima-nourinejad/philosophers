@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 13:16:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:30:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,22 @@
 
 void	*ft_philo(void *input)
 {
-	t_philo	*philo_node;
-	int		thread_num;
-	t_data	*eat;
-	t_data	*sleep;
-	t_data	*times;
-	t_data	*die;
-	int total_number;
-	int		error1;
-	// int		error2;
-	// long long t;
-	int	repeat;
-	long long	start_time;
-	int finish;
+	int	thread_num;
+	int	total_number;
+	int	finish;
 
-	error1 = pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
-	error1 = pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
-	philo_node = (((t_input *)input)->info)->philo;
-	thread_num = *(((t_input *)input)->thread_num);
-	die = ((((t_input *)input)->info)->data)->next;
-	eat = (((((t_input *)input)->info)->data)->next)->next;
-	sleep = ((((((t_input *)input)->info)->data)->next)->next)->next;
-	times = (((((((t_input *)input)->info)->data)->next)->next)->next)->next;
-	start_time = *((((t_input *)input)->info)->start_time);
-	while (*(philo_node->philo_num) != thread_num)
-		philo_node = philo_node->next;
-	error1 = pthread_mutex_lock(philo_node->philo_lock);
-	repeat = *(philo_node->times_eat);
-	error1 = pthread_mutex_unlock(philo_node->philo_lock);
+	pthread_mutex_lock(((((t_input *)input)->info)->start_lock));
+	pthread_mutex_unlock(((((t_input *)input)->info)->start_lock));
 	finish = 0;
 	total_number = *(((((t_input *)input)->info)->data)->value);
+	thread_num = *(((t_input *)input)->thread_num);
 	if (thread_num % 2 == 0
 		|| (thread_num == total_number
 			&& total_number % 2 != 0 && total_number > 1))
 	{
 		finish = ft_think(input, thread_num, finish);
-		error1 = pthread_mutex_lock(((((t_input *)input)->info)->first_lock));
-		error1 = pthread_mutex_unlock(((((t_input *)input)->info)->first_lock));
+		pthread_mutex_lock(((((t_input *)input)->info)->first_lock));
+		pthread_mutex_unlock(((((t_input *)input)->info)->first_lock));
 	}
 	while (!finish)
 	{
@@ -59,6 +38,7 @@ void	*ft_philo(void *input)
 	}
 	return (NULL);
 }
+
 void	*ft_check_dead(void *info)
 {
 	t_philo		*philo_node;
