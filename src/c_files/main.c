@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/27 10:39:07 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 11:06:02 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*ft_philo(void *input)
 	t_data	*sleep;
 	t_data	*times;
 	t_data	*die;
+	int total_number;
 	int		error1;
 	int		error2;
 	long long t;
@@ -41,11 +42,14 @@ void	*ft_philo(void *input)
 	error1 = pthread_mutex_lock(philo_node->philo_lock);
 	repeat = *(philo_node->times_eat);
 	error1 = pthread_mutex_unlock(philo_node->philo_lock);
-	if (*(times->value) == 0)
-		return (NULL);
 	finish = 0;
-	if (thread_num % 2 == 0)
-		finish = ft_think(1, input, thread_num, finish);
+	total_number = *(((((t_input *)input)->info)->data)->value);
+	if (thread_num % 2 == 0 || (thread_num == total_number && total_number % 2 != 0))
+	{
+		ft_think(0, input, thread_num, finish);
+		error1 = pthread_mutex_lock(((((t_input *)input)->info)->first_lock));
+		error1 = pthread_mutex_unlock(((((t_input *)input)->info)->first_lock));
+	}
 	while (!finish || (*(times->value)) == -1)
 	{
 		if (ft_is_dead(input))
@@ -54,7 +58,7 @@ void	*ft_philo(void *input)
 		if (!error1)
 		{
 			t = ft_timestamp_ms() - start_time;
-			ft_wait_ms(0, t, thread_num, "is taken a fork", ((t_input *)input)->info);
+			ft_wait_ms(1, t, thread_num, "is taken a fork", ((t_input *)input)->info);
 		}
 		error2 = pthread_mutex_lock((philo_node->right_fork));
 		if (!error2)
@@ -143,6 +147,7 @@ int	main(int argc, char **argv)
 	t_input		*input;
 	t_thread	*thread;
 	pthread_t	thread_check;
+	pthread_t	first_round;
 	int			error;
 
 	if (argc != 5 && argc != 6)
@@ -188,6 +193,19 @@ int	main(int argc, char **argv)
 		ft_print_error("Problem in creating the information package");
 		return (EXIT_FAILURE);
 	}
+	error = pthread_mutex_lock((info)->start_lock);
+	// if (error)
+	// 	return (0);
+	error = pthread_create(&first_round, 0, ft_check_first_round, (void *)info);
+	if (error)
+	{
+		ft_clean_info(info);
+		ft_clean_philo(philo);
+		ft_clean_fork(fork);
+		ft_clean_data(data);
+		ft_print_error("Problem in creating the first round thread");
+		return (EXIT_FAILURE);
+	}
 	input = ft_create_input(data->value, info);
 	if (!input)
 	{
@@ -220,6 +238,13 @@ int	main(int argc, char **argv)
 		ft_print_error("Problem in creating the check thread");
 		return (EXIT_FAILURE);
 	}
+	error = pthread_mutex_unlock((input->info)->start_lock);
+	// if (error)
+	// {
+	// 	ft_clean_thread(first);
+	// 	return (0);
+	// }
+	pthread_join(first_round, 0);
 	pthread_join(thread_check, 0);
 	ft_clean_thread(thread);
 	ft_clean_input(input);

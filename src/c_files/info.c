@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/26 14:53:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:31:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 {
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*first_lock;
 	long long		*start_time;
 	int				*dead;
 	int				error;
@@ -62,30 +63,46 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 	print_lock = malloc(sizeof(pthread_mutex_t));
 	if (!print_lock)
 		return (ft_clean_info_node(start_lock, 0, 0, 0));
+	first_lock = malloc(sizeof(pthread_mutex_t));
+	if (!first_lock)
+		return (ft_clean_info_node(start_lock, 0, print_lock, 0));
 	error = pthread_mutex_init(start_lock, 0);
 	if (error)
 		return (ft_clean_info_node(start_lock, 0, print_lock, 0));
 	error = pthread_mutex_init(print_lock, 0);
 	if (error)
 		return (ft_clean_info_node(print_lock, 1, print_lock, 0));
+	error = pthread_mutex_init(first_lock, 0);
+	if (error)
+	{
+		free (first_lock);
+		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
+	}
 	dead = malloc(sizeof(int));
 	if (!dead)
-		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
+	{
+		pthread_mutex_destroy(first_lock);
+		free (first_lock);
+		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
+	}
 	*dead = 0;
 	start_time = malloc(sizeof(long long));
 	*start_time = ft_timestamp_ms();
 	info = malloc(sizeof(t_info));
 	if (!info)
 	{
+		pthread_mutex_destroy(first_lock);
+		free (first_lock);
 		free (dead);
 		free (start_time);
-		return (ft_clean_info_node(print_lock, 1, print_lock, 1));
+		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
 	}
 	info->philo = philo;
 	info->fork = fork;
 	info->data = data;
 	info->start_time = start_time;
 	info->start_lock = start_lock;
+	info->first_lock = first_lock;
 	info->print_lock = print_lock;
 	info->dead = dead;
 	return (info);
