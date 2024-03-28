@@ -6,45 +6,53 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:44:20 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 14:13:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:30:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-int ft_check_dead_full(t_info *info, long long current)
+int ft_check_dead_once(t_info *info, long long current,
+	t_philo *philo_node, int *sum)
 {
-	t_philo		*philo_node;
-	int			die;
-	int			dead;
-	t_data		*times;
-	int			not_eat;
-	int			sum;
-	int 		repeat;
-	long long	start_time;
+	int		die;
+	t_data	*times;
+	int		not_eat;
+	int		repeat;
 
 	die = *(((((t_info *)info)->data)->next)->value);
 	times = ((((((t_info *)info)->data)->next)->next)->next)->next;
-	start_time = *((t_info *)info)->start_time;
+	pthread_mutex_lock(philo_node->philo_lock);
+	repeat = *(philo_node->times_eat);
+	if (repeat >= (*(times->value)))
+		*sum = *sum + 1;
+	not_eat = (int)(current - *(philo_node->last_eat));
+	pthread_mutex_unlock(philo_node->philo_lock);
+	if (((repeat < *(times->value)) || *(times->value) == -1) && not_eat >= die)
+	{
+		pthread_mutex_lock(((t_info *)info)->start_lock);
+		*(((t_info *)info)->dead) = 1;
+		pthread_mutex_unlock(((t_info *)info)->start_lock);
+		ft_lock_print_dead(*(info->start_time), current,
+			*(philo_node->philo_num), "is dead", (t_info *)info);
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_check_dead_full(t_info *info, long long current)
+{
+	t_philo		*philo_node;
+	t_data		*times;
+	int			sum;
+
+	times = ((((((t_info *)info)->data)->next)->next)->next)->next;
 	philo_node = ((t_info *)info)->philo;
 	sum = 0;
 	while (philo_node)
 	{
-		pthread_mutex_lock(philo_node->philo_lock);
-		repeat = *(philo_node->times_eat);
-		if (repeat >= (*(times->value)))
-			sum++;
-		not_eat = (int)(current - *(philo_node->last_eat));
-		pthread_mutex_unlock(philo_node->philo_lock);
-		if (((repeat < *(times->value)) || *(times->value) == -1) && not_eat >= die)
-		{
-			pthread_mutex_lock(((t_info *)info)->start_lock);
-			*(((t_info *)info)->dead) = 1;
-			dead = 1;
-			pthread_mutex_unlock(((t_info *)info)->start_lock);
-			ft_lock_print_dead(start_time ,current, *(philo_node->philo_num), "is dead", (t_info *)info);
+		if (ft_check_dead_once(info, current, philo_node, &sum))
 			return (1);
-		}
 		philo_node = philo_node->next;
 	}
 	if (sum >= *((info->data)->value) && *(times->value) != -1)
