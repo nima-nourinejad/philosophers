@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 16:31:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:38:52 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char **argv)
 	if (!info)
 		return (ft_clean_failure(0, 0, 0, "Inforamtion package"));
 	error = pthread_mutex_lock(info->start_lock);
+	if (error)
+		return (ft_clean_failure(info, 0, 0, "Locking start lock"));
 	utility = ft_create_utility(info);
 	if (!utility)
 		return (ft_clean_failure(info, 0, 0, "Utility"));
@@ -34,5 +36,7 @@ int	main(int argc, char **argv)
 	if (!thread)
 		return (ft_clean_failure(info, utility, input, "List of threads"));
 	error = pthread_mutex_unlock((input->info)->start_lock);
+	if (error)
+		return (ft_clean_failure(info, utility, input, "Unlocking start lock"));
 	return (ft_clean_success(info, utility, input, thread));
 }
