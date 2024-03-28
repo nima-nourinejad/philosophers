@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 15:20:30 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:56:28 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_info	*ft_clean_info(t_info *node)
 	return (0);
 }
 
-t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
+t_info	*ft_create_info_node(t_philo *philo, t_fork *fork, t_data *data, long long start)
 {
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
@@ -89,7 +89,7 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 	}
 	*dead = 0;
 	start_time = malloc(sizeof(long long));
-	*start_time = ft_timestamp_ms();
+	*start_time = start;
 	info = malloc(sizeof(t_info));
 	if (!info)
 	{
@@ -107,5 +107,59 @@ t_info	*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data)
 	info->first_lock = first_lock;
 	info->print_lock = print_lock;
 	info->dead = dead;
+	return (info);
+}
+
+t_info	*ft_create_info(int argc, char **argv)
+{
+	t_data		*data;
+	t_fork		*fork;
+	t_philo		*philo;
+	long long	timestamp;
+	t_info		*info;
+
+	if (argc != 5 && argc != 6)
+	{
+		ft_print_error("wrong number of arguments");
+		exit (EXIT_FAILURE);
+	}
+	data = ft_create_data(argc, argv);
+	if (!data)
+	{
+		ft_print_error("Problem in processing the user inputs");
+		exit (EXIT_FAILURE);
+	}
+	fork = ft_create_fork(data->value);
+	if (!fork)
+	{
+		ft_clean_data(data);
+		ft_print_error("Problem in creating the list of forks");
+		exit (EXIT_FAILURE);
+	}
+	timestamp = ft_timestamp_ms();
+	if (timestamp == -1)
+	{
+		ft_clean_fork(fork);
+		ft_clean_data(data);
+		ft_print_error("Problem in getting the start time");
+		exit (EXIT_FAILURE);
+	}
+	philo = ft_create_philo(data->value, timestamp, fork);
+	if (!philo)
+	{
+		ft_clean_fork(fork);
+		ft_clean_data(data);
+		ft_print_error("Problem in creating the list of philosophers");
+		exit (EXIT_FAILURE);
+	}
+	info = ft_create_info_node(philo, fork, data, timestamp);
+	if (!info)
+	{
+		ft_clean_philo(philo);
+		ft_clean_fork(fork);
+		ft_clean_data(data);
+		ft_print_error("Problem in creating the information package");
+		exit (EXIT_FAILURE);
+	}
 	return (info);
 }

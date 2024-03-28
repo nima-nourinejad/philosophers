@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 15:12:37 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:32:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_philo			*ft_clean_philo(t_philo *first);
 t_philo			*ft_create_philo(int *total_number, long long timestamp,
 					t_fork *fork);
 t_info			*ft_clean_info(t_info *node);
-t_info			*ft_create_info(t_philo *philo,	t_fork *fork, t_data *data);
+t_info			*ft_create_info(int argc, char **argv);
 t_input			*ft_clean_input(t_input *first);
 t_input			*ft_create_input(int *total_number, t_info *info);
 t_thread		*ft_clean_thread(t_thread *first);
@@ -111,5 +111,9 @@ void			ft_check_error(int value, int *error, char *str);
 void			*ft_check_first_round(void *info);
 t_utility		*ft_clean_utility(t_utility *node);
 t_utility		*ft_create_utility(t_info *info);
+int				ft_clean_failure(t_info *info, t_utility *utility,
+					t_input *input, char *str);
+int				ft_clean_success(t_info *info, t_utility *utility,
+					t_input *input, t_thread *thread);
 
 #endif // PHILO_H
