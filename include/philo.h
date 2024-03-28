@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 11:28:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 12:02:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ int				ft_only_wait_ms(int time_ms);
 int				ft_only_wait_micro(int time_micro);
 int				ft_is_dead(void *input);
 int				ft_think(void *input, int thread_num, int finish);
+int				ft_eat_sleep(void *input, int thread_num, int finish);
 void			ft_check_error(int value, int *error, char *str);
-int				ft_sleep(void *input, int thread_num, int finish);
-void 			*ft_check_first_round(void *info);
+void			*ft_check_first_round(void *info);
 
 #endif // PHILO_H

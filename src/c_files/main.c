@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 11:28:14 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:16:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	*ft_philo(void *input)
 	t_data	*die;
 	int total_number;
 	int		error1;
-	int		error2;
-	long long t;
+	// int		error2;
+	// long long t;
 	int	repeat;
 	long long	start_time;
 	int finish;
@@ -44,7 +44,9 @@ void	*ft_philo(void *input)
 	error1 = pthread_mutex_unlock(philo_node->philo_lock);
 	finish = 0;
 	total_number = *(((((t_input *)input)->info)->data)->value);
-	if (thread_num % 2 == 0 || (thread_num == total_number && total_number % 2 != 0))
+	if (thread_num % 2 == 0
+		|| (thread_num == total_number
+			&& total_number % 2 != 0 && total_number > 1))
 	{
 		finish = ft_think(input, thread_num, finish);
 		error1 = pthread_mutex_lock(((((t_input *)input)->info)->first_lock));
@@ -52,33 +54,7 @@ void	*ft_philo(void *input)
 	}
 	while (!finish)
 	{
-		if (ft_is_dead(input))
-			break;
-		error1 = pthread_mutex_lock((philo_node->left_fork));
-		if (!error1)
-		{
-			t = ft_timestamp_ms() - start_time;
-			ft_wait_ms(1, t, thread_num, "is taken a fork", ((t_input *)input)->info);
-		}
-		error2 = pthread_mutex_lock((philo_node->right_fork));
-		if (!error2)
-		{
-			t = ft_timestamp_ms() - start_time;
-			ft_wait_ms(0, t, thread_num, "is taken a fork", ((t_input *)input)->info);
-		}
-		if (!error1 && !error2)
-		{
-			t = ft_timestamp_ms() - start_time;
-			error1 = pthread_mutex_lock(philo_node->philo_lock);
-			*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
-			*(philo_node->last_eat) = ft_timestamp_ms() - start_time;
-			repeat = *(philo_node->times_eat);
-			if (repeat >= *(times->value) && (*(times->value)) != -1)
-				finish = 1;
-			error1 = pthread_mutex_unlock(philo_node->philo_lock);
-			ft_wait_ms(*(eat->value), t, thread_num, "is eating", ((t_input *)input)->info);
-		}
-		finish = ft_sleep(input, thread_num, finish);
+		finish = ft_eat_sleep(input, thread_num, finish);
 		finish = ft_think(input, thread_num, finish);
 	}
 	return (NULL);
@@ -112,12 +88,11 @@ void	*ft_check_dead(void *info)
 		while (philo_node)
 		{
 			error = pthread_mutex_lock(philo_node->philo_lock);
-			if ((((*(philo_node->times_eat)) >= (*(times->value)))))
+			repeat = *(philo_node->times_eat);
+			if (repeat >= (*(times->value)))
 				sum++;
 			not_eat = (int)(current - *(philo_node->last_eat));
-			repeat = *(philo_node->times_eat);
 			error = pthread_mutex_unlock(philo_node->philo_lock);
-			//printf("hunger time: %d\n", not_eat);
 			if (((repeat < *(times->value)) || *(times->value) == -1) && not_eat >= die)
 			{
 				error = pthread_mutex_lock(((t_info *)info)->start_lock);

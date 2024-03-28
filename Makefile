@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/27 13:21:38 by nnourine         ###   ########.fr        #
+#    Updated: 2024/03/28 12:02:29 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/thread.c \
 		$(SRCDIR)/check_first_round.c \
 		$(SRCDIR)/is_dead.c \
-		$(SRCDIR)/sleep.c \
+		$(SRCDIR)/eat_sleep.c \
 		$(SRCDIR)/think.c \
 		$(SRCDIR)/main.c
 		

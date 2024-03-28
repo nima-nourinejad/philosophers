@@ -6,13 +6,13 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 13:20:23 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 11:17:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/03/28 13:06:43 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-void *ft_check_first_round(void *info)
+void	*ft_check_first_round(void *info)
 {
 	int		ate;
 	t_philo	*philo_node;
