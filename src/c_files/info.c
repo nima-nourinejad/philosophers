@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 16:48:57 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:49:56 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ t_info	*ft_clean_info(t_info *node)
 	ft_clean_info_node(node->start_lock, 1, node->print_lock, 1);
 	free(node->dead);
 	free(node->start_time);
-	pthread_mutex_destroy(node->first_lock);
-	free (node->first_lock);
 	free (node);
 	return (0);
 }
@@ -54,7 +52,6 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 {
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
-	pthread_mutex_t	*first_lock;
 	long long		*start_time;
 	int				*dead;
 	int				error;
@@ -66,26 +63,19 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	print_lock = malloc(sizeof(pthread_mutex_t));
 	if (!print_lock)
 		return (ft_clean_info_node(start_lock, 0, 0, 0));
-	first_lock = malloc(sizeof(pthread_mutex_t));
-	if (!first_lock)
-		return (ft_clean_info_node(start_lock, 0, print_lock, 0));
 	error = pthread_mutex_init(start_lock, 0);
 	if (error)
 		return (ft_clean_info_node(start_lock, 0, print_lock, 0));
 	error = pthread_mutex_init(print_lock, 0);
 	if (error)
 		return (ft_clean_info_node(print_lock, 1, print_lock, 0));
-	error = pthread_mutex_init(first_lock, 0);
 	if (error)
 	{
-		free (first_lock);
 		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
 	}
 	dead = malloc(sizeof(int));
 	if (!dead)
 	{
-		pthread_mutex_destroy(first_lock);
-		free (first_lock);
 		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
 	}
 	*dead = 0;
@@ -94,8 +84,6 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	info = malloc(sizeof(t_info));
 	if (!info)
 	{
-		pthread_mutex_destroy(first_lock);
-		free (first_lock);
 		free (dead);
 		free (start_time);
 		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
@@ -105,7 +93,6 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	info->data = data;
 	info->start_time = start_time;
 	info->start_lock = start_lock;
-	info->first_lock = first_lock;
 	info->print_lock = print_lock;
 	info->dead = dead;
 	return (info);

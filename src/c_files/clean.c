@@ -6,17 +6,14 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:03:19 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 16:47:53 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:44:19 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-int	ft_clean_failure(t_info *info, t_utility *utility,
-	t_input *input, char *str)
+int	ft_clean_failure(t_info *info, t_input *input, char *str)
 {
-	if (utility)
-		ft_clean_utility(utility);
 	if (input)
 		ft_clean_input(input);
 	if (info)
@@ -31,11 +28,9 @@ int	ft_clean_failure(t_info *info, t_utility *utility,
 	return (EXIT_FAILURE);
 }
 
-int	ft_clean_success(t_info *info, t_utility *utility,
+int	ft_clean_success(t_info *info,
 	t_input *input, t_thread *thread)
 {
-	if (utility)
-		ft_clean_utility(utility);
 	if (thread)
 		ft_clean_thread(thread);
 	if (input)

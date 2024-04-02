@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/29 09:18:17 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/02 15:48:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ typedef struct s_info
 	long long		*start_time;
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
-	pthread_mutex_t	*first_lock;
 }					t_info;
 
 typedef struct s_input
@@ -72,14 +71,12 @@ typedef struct s_thread
 
 typedef struct s_utility
 {
-	pthread_t	*first_round;
 	pthread_t	*check_dead;
 }				t_utility;
 
 void			ft_putstr_fd(char *s, int fd);
 void			*ft_philo_cycle(void *input);
 void			*ft_check_dead(void *info);
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_atoi_error(char *str, int *error);
 void			ft_print_error(char *error_message);
 t_fork			*ft_clean_fork(t_fork *first);
@@ -108,12 +105,9 @@ int				ft_is_dead(void *input);
 int				ft_think(void *input, int thread_num, int finish);
 int				ft_eat_sleep(void *input, int thread_num, int finish);
 void			ft_check_error(int value, int *error, char *str);
-void			*ft_check_first_round(void *info);
-t_utility		*ft_clean_utility(t_utility *node);
-t_utility		*ft_create_utility(t_info *info);
-int				ft_clean_failure(t_info *info, t_utility *utility,
+int				ft_clean_failure(t_info *info,
 					t_input *input, char *str);
-int				ft_clean_success(t_info *info, t_utility *utility,
+int				ft_clean_success(t_info *info,
 					t_input *input, t_thread *thread);
 int				ft_lock_unlock(pthread_mutex_t *lock);
 

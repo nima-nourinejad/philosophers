@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/03/29 09:18:50 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/02 15:43:23 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,20 +36,17 @@ SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/print_error.c \
 		$(SRCDIR)/check_error.c \
 		$(SRCDIR)/lock_print.c \
-		$(SRCDIR)/strncmp.c \
 		$(SRCDIR)/wait.c \
 		$(SRCDIR)/find_fork.c \
 		$(SRCDIR)/data.c \
 		$(SRCDIR)/fork.c \
 		$(SRCDIR)/philo.c \
 		$(SRCDIR)/info.c \
-		$(SRCDIR)/utility.c \
 		$(SRCDIR)/input.c \
 		$(SRCDIR)/thread.c \
 		$(SRCDIR)/lock_unlock.c \
 		$(SRCDIR)/thread_cycle.c \
 		$(SRCDIR)/check_dead.c \
-		$(SRCDIR)/check_first_round.c \
 		$(SRCDIR)/is_dead.c \
 		$(SRCDIR)/eat_sleep.c \
 		$(SRCDIR)/think.c \

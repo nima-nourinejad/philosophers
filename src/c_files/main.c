@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 16:38:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:13:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,23 @@ int	main(int argc, char **argv)
 	t_info		*info;
 	t_input		*input;
 	t_thread	*thread;
-	t_utility	*utility;
 	int			error;
 
 	info = ft_create_info(argc, argv);
 	if (!info)
-		return (ft_clean_failure(0, 0, 0, "Inforamtion package"));
+		return (ft_clean_failure(0, 0, "Inforamtion package"));
 	error = pthread_mutex_lock(info->start_lock);
 	if (error)
-		return (ft_clean_failure(info, 0, 0, "Locking start lock"));
-	utility = ft_create_utility(info);
-	if (!utility)
-		return (ft_clean_failure(info, 0, 0, "Utility"));
+		return (ft_clean_failure(info, 0, "Locking start lock"));
 	input = ft_create_input(info->data->value, info);
 	if (!input)
-		return (ft_clean_failure(info, utility, 0, "Thread inputs"));
+		return (ft_clean_failure(info, 0, "Thread inputs"));
 	thread = ft_create_thread(info->data->value, input);
 	if (!thread)
-		return (ft_clean_failure(info, utility, input, "List of threads"));
+		return (ft_clean_failure(info, input, "List of threads"));
 	error = pthread_mutex_unlock((input->info)->start_lock);
 	if (error)
-		return (ft_clean_failure(info, utility, input, "Unlocking start lock"));
-	return (ft_clean_success(info, utility, input, thread));
+		return (ft_clean_failure(info, input, "Unlocking start lock"));
+	ft_check_dead((void *)info);
+	return (ft_clean_success(info, input, thread));
 }
