@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 13:40:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:41:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_wait_ms(int time_ms, long long timestamp, int number,
 	end = timestamp + time_ms;
 	while (current < end)
 	{
-		if (usleep(1) == -1)
+		if (usleep(500) == -1)
 			return (-1);
 		current = ft_timestamp_ms() - *(info->start_time);
 		if (current == -1)
@@ -79,7 +79,7 @@ int	ft_only_wait_ms(int time_ms)
 	current = start;
 	while (current < end)
 	{
-		if (usleep(1) == -1)
+		if (usleep(500) == -1)
 			return (-1);
 		current = ft_timestamp_micro();
 		if (current == -1)
