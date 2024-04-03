@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:01:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 13:30:42 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:09:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ int	ft_sleep(void *input, int thread_num, int finish)
 		&error, "unlock problem");
 	ft_check_error(pthread_mutex_unlock(philo_node->right_fork),
 		&error, "unlock problem");
-	ft_check_error(ft_wait_ms(sleep_time, t, thread_num,
-			"is sleeping", ((t_input *)input)->info),
-		&error, "print problem");
+	ft_lock_print(t, thread_num, "is sleeping", ((t_input *)input)->info);
+	ft_wait_ms(sleep_time, t, start_time);
 	if (finish || ft_is_dead(input))
 		return (1);
 	return (error);
@@ -62,8 +61,7 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 	if (!error)
 	{
 		t = ft_timestamp_ms() - start_time;
-		ft_wait_ms(0, t, thread_num, "has taken a fork",
-			((t_input *)input)->info);
+		ft_lock_print(t, thread_num, "has taken a fork", ((t_input *)input)->info);
 	}
 	error = pthread_mutex_lock(philo_node->right_fork);
 	if (!error)
@@ -75,10 +73,9 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 		if (*(philo_node->times_eat) >= eat_times && eat_times != -1)
 			finish = 1;
 		pthread_mutex_unlock(philo_node->philo_lock);
-		ft_wait_ms(0, t, thread_num, "has taken a fork",
-			((t_input *)input)->info);
-		ft_wait_ms(eat_time, t, thread_num, "is eating",
-			((t_input *)input)->info);
+		ft_lock_print(t, thread_num, "has taken a fork", ((t_input *)input)->info);
+		ft_lock_print(t, thread_num, "is eating", ((t_input *)input)->info);
+		ft_wait_ms(eat_time, t, start_time);
 	}
 	finish = ft_sleep(input, thread_num, finish);
 	if (finish || ft_is_dead(input))

@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 13:51:15 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:01:47 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,16 @@ long long	ft_timestamp_ms(void)
 	return (timestamp);
 }
 
-int	ft_wait_ms(int time_ms, long long timestamp, int number,
-	char *str, t_info *info)
+int	ft_wait_ms(int time_ms, long long timestamp, long long start_time)
 {
 	long long		current;
 	long long		end;
 
-	ft_lock_print(timestamp, number, str, info);
 	if (time_ms <= 0)
 		return (0);
 	if (time_ms > 10)
 		usleep((time_ms - 10) * 1000);
-	current = ft_timestamp_ms() - *(info->start_time);
+	current = ft_timestamp_ms() - start_time;
 	if (current == -1)
 		return (-1);
 	end = timestamp + time_ms;
@@ -45,7 +43,7 @@ int	ft_wait_ms(int time_ms, long long timestamp, int number,
 	{
 		if (usleep(500) == -1)
 			return (-1);
-		current = ft_timestamp_ms() - *(info->start_time);
+		current = ft_timestamp_ms() - start_time;
 		if (current == -1)
 			return (-1);
 	}
