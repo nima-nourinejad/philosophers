@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:36:00 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:20:10 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_philo	*ft_clean_philo(t_philo *first)
 	return (0);
 }
 
-t_philo	*ft_create_philo_node(int number, long long timestamp, t_fork *fork)
+t_philo	*ft_create_philo_node(int number, t_fork *fork)
 {
 	t_philo			*new;
 	int				*philo_num;
@@ -62,7 +62,6 @@ t_philo	*ft_create_philo_node(int number, long long timestamp, t_fork *fork)
 	last_eat = malloc(sizeof(long long));
 	if (!last_eat)
 		return (ft_clean_philo_node(0, 0, 0, new));
-	*last_eat = timestamp;
 	*last_eat = 0;
 	philo_num = malloc(sizeof(int));
 	if (!philo_num)
@@ -91,8 +90,7 @@ t_philo	*ft_create_philo_node(int number, long long timestamp, t_fork *fork)
 	return (new);
 }
 
-t_philo	*ft_create_philo(int *total_number, long long timestamp,
-	t_fork *fork)
+t_philo	*ft_create_philo(int *total_number,	t_fork *fork)
 {
 	t_philo	*first;
 	t_philo	*new;
@@ -103,7 +101,7 @@ t_philo	*ft_create_philo(int *total_number, long long timestamp,
 	while (number < *total_number)
 	{
 		number++;
-		new = ft_create_philo_node(number, timestamp, fork);
+		new = ft_create_philo_node(number, fork);
 		if (!new)
 		{
 			ft_clean_philo(first);

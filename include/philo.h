@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:01:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:22:03 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ t_data			*ft_create_data(int argc, char **argv);
 pthread_mutex_t	*ft_find_fork(t_fork *fork, int number, char side);
 long long		ft_timestamp_ms(void);
 t_philo			*ft_clean_philo(t_philo *first);
-t_philo			*ft_create_philo(int *total_number, long long timestamp,
-					t_fork *fork);
+t_philo			*ft_create_philo(int *total_number, t_fork *fork);
 t_info			*ft_clean_info(t_info *node);
 t_info			*ft_create_info(int argc, char **argv);
 t_input			*ft_clean_input(t_input *first);

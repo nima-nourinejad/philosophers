@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:53:55 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:21:33 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,20 +129,21 @@ t_info	*ft_create_info(int argc, char **argv)
 		ft_print_error("Problem in creating the list of forks");
 		exit (EXIT_FAILURE);
 	}
-	timestamp = ft_timestamp_ms();
-	if (timestamp == -1)
-	{
-		ft_clean_fork(fork);
-		ft_clean_data(data);
-		ft_print_error("Problem in getting the start time");
-		exit (EXIT_FAILURE);
-	}
-	philo = ft_create_philo(data->value, timestamp, fork);
+	philo = ft_create_philo(data->value, fork);
 	if (!philo)
 	{
 		ft_clean_fork(fork);
 		ft_clean_data(data);
 		ft_print_error("Problem in creating the list of philosophers");
+		exit (EXIT_FAILURE);
+	}
+	timestamp = ft_timestamp_ms();
+	if (timestamp == -1)
+	{
+		ft_clean_philo(philo);
+		ft_clean_fork(fork);
+		ft_clean_data(data);
+		ft_print_error("Problem in getting the start time");
 		exit (EXIT_FAILURE);
 	}
 	info = ft_create_info_node(philo, fork, data, timestamp);
