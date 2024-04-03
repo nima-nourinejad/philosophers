@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 12:15:45 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 13:51:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_only_wait_ms(int time_ms)
 	start = ft_timestamp_ms();
 	end = start + time_ms;
 	if (start == -1)
-		return (-1);	
+		return (-1);
 	if (time_ms > 10)
 		usleep((time_ms - 10) * 1000);
 	current = ft_timestamp_ms();
