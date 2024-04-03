@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:44:20 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 10:06:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:16:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_check_dead_once(t_info *info, long long current,
 		pthread_mutex_lock(((t_info *)info)->start_lock);
 		*(((t_info *)info)->dead) = 1;
 		pthread_mutex_unlock(((t_info *)info)->start_lock);
-		ft_lock_print_dead(*(info->start_time), current,
+		ft_lock_print_dead(current,
 			*(philo_node->philo_num), "is dead", (t_info *)info);
 		return (1);
 	}

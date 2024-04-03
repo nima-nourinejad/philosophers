@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:36:31 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 11:04:44 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:22:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	*ft_philo_cycle(void *input)
 	while (!finish)
 	{
 		if (thread_num % 2 == 0)
-			usleep(5000);
+			usleep(3000);
 		else if (thread_num == total_number && total_number > 1)
-			usleep(10000);
+			usleep(6000);
 		finish = ft_eat_sleep(input, thread_num, finish);
 		finish = ft_think(input, thread_num, finish);
 	}

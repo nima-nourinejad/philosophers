@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/02 15:48:14 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 12:15:18 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ t_thread		*ft_clean_thread(t_thread *first);
 t_thread		*ft_create_thread(int *total_number, t_input *input);
 int				ft_wait_ms(int time_ms, long long timestamp, int number,
 					char *str, t_info *info);
-int				ft_lock_print(long long start, long long timestamp,
-					int number, char *str, t_info *info);
-int				ft_lock_print_dead(long long start, long long timestamp,
-					int number, char *str, t_info *info);
+int				ft_lock_print(long long timestamp, int number,
+					char *str, t_info *info);
+int				ft_lock_print_dead(long long timestamp,	int number,
+					char *str, t_info *info);
 int				ft_only_wait_ms(int time_ms);
 int				ft_is_dead(void *input);
 int				ft_think(void *input, int thread_num, int finish);
