@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:20:10 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:42:41 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,40 +50,26 @@ t_philo	*ft_clean_philo(t_philo *first)
 t_philo	*ft_create_philo_node(int number, t_fork *fork)
 {
 	t_philo			*new;
-	int				*philo_num;
-	int				*times_eat;
-	long long		*last_eat;
-	pthread_mutex_t	*lock;
-	int				error;
 
 	new = malloc(sizeof(t_philo));
 	if (!new)
-		return (ft_clean_philo_node(0, 0, 0, 0));
-	last_eat = malloc(sizeof(long long));
-	if (!last_eat)
-		return (ft_clean_philo_node(0, 0, 0, new));
-	*last_eat = 0;
-	philo_num = malloc(sizeof(int));
-	if (!philo_num)
-		return (ft_clean_philo_node(last_eat, 0, 0, new));
-	*philo_num = number;
-	times_eat = malloc(sizeof(int));
-	if (!times_eat)
-		return (ft_clean_philo_node(last_eat, 0, philo_num, new));
-	*times_eat = 0;
-	lock = malloc(sizeof(pthread_mutex_t));
-	if (!lock)
-		return (ft_clean_philo_node (last_eat, times_eat, philo_num, new));
-	error = pthread_mutex_init(lock, 0);
-	if (error)
+		return (0);
+	new->last_eat = malloc(sizeof(long long));
+	new->philo_num = malloc(sizeof(int));
+	new->times_eat = malloc(sizeof(int));
+	if (!(new->last_eat) || !(new->philo_num) || !(new->times_eat))
+		return (ft_clean_philo(new));
+	*(new->last_eat) = 0;
+	*(new->philo_num) = number;
+	*(new->times_eat) = 0;
+	new->philo_lock = malloc(sizeof(pthread_mutex_t));
+	if (!(new->philo_lock))
+		return (ft_clean_philo(new));
+	if (pthread_mutex_init(new->philo_lock, 0))
 	{
-		free (lock);
-		return (ft_clean_philo_node (last_eat, times_eat, philo_num, new));
+		free (new->philo_lock);
+		return (ft_clean_philo(new));
 	}
-	new->philo_num = philo_num;
-	new->philo_lock = lock;
-	new->last_eat = last_eat;
-	new->times_eat = times_eat;
 	new->left_fork = ft_find_fork(fork, number, 'l');
 	new->right_fork = ft_find_fork(fork, number, 'r');
 	new->next = 0;
