@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:03:19 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/02 15:44:19 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:51:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_clean_failure(t_info *info, t_input *input, char *str)
 	return (EXIT_FAILURE);
 }
 
-int	ft_clean_success(t_info *info,
+int	ft_full_clean(t_info *info,
 	t_input *input, t_thread *thread)
 {
 	if (thread)
@@ -42,5 +42,5 @@ int	ft_clean_success(t_info *info,
 		ft_clean_data(info->data);
 		ft_clean_info(info);
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

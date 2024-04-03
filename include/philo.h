@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 15:12:13 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:01:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_utility
 
 void			ft_putstr_fd(char *s, int fd);
 void			*ft_philo_cycle(void *input);
-void			*ft_check_dead(void *info);
+int				ft_check_dead(t_info *info);
 int				ft_atoi_error(char *str, int *error);
 void			ft_print_error(char *error_message);
 t_fork			*ft_clean_fork(t_fork *first);
@@ -102,7 +102,7 @@ int				ft_lock_print(long long timestamp, int number,
 int				ft_lock_print_eating(long long timestamp, int number,
 					t_info *info);
 int				ft_lock_print_dead(long long timestamp,	int number,
-					char *str, t_info *info);
+					t_info *info);
 int				ft_only_wait_ms(int time_ms);
 int				ft_is_dead_full(void *input);
 int				ft_think(void *input, int thread_num, int finish);
@@ -111,7 +111,7 @@ int				ft_eat_sleep(void *input, int thread_num, int finish);
 void			ft_check_error(int value, int *error, char *str);
 int				ft_clean_failure(t_info *info,
 					t_input *input, char *str);
-int				ft_clean_success(t_info *info,
+int				ft_full_clean(t_info *info,
 					t_input *input, t_thread *thread);
 int				ft_lock_unlock(pthread_mutex_t *lock);
 

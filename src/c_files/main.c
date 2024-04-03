@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/02 16:13:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:50:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	main(int argc, char **argv)
 	error = pthread_mutex_unlock((input->info)->start_lock);
 	if (error)
 		return (ft_clean_failure(info, input, "Unlocking start lock"));
-	ft_check_dead((void *)info);
-	return (ft_clean_success(info, input, thread));
+	error = ft_check_dead(info);
+	ft_full_clean(info, input, thread);
+	if (error)
+		return (ft_clean_failure(0, 0, "Check Thread Problem"));
+	return (EXIT_SUCCESS);
 }
