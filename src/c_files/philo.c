@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:43:27 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/28 16:49:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:36:00 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ t_philo	*ft_clean_philo(t_philo *first)
 	return (0);
 }
 
-t_philo	*ft_create_philo_node(int number, long long timestamp,
-	t_fork *fork)
+t_philo	*ft_create_philo_node(int number, long long timestamp, t_fork *fork)
 {
 	t_philo			*new;
 	int				*philo_num;
