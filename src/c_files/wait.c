@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/02 17:41:14 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 10:12:06 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ long long	ft_timestamp_ms(void)
 
 long long	ft_timestamp_micro(void)
 {
-	struct timeval	tv;
-	long long		timestamp;
-	int				error;
+	// struct timeval	tv;
+	// long long		timestamp;
+	// int				error;
 
-	error = gettimeofday(&tv, 0);
-	if (error == -1)
-		return (-1);
-	timestamp = (((long long)(tv.tv_sec)) * 1000000)
-		+ (((long long)(tv.tv_usec)));
-	return (timestamp);
+	// error = gettimeofday(&tv, 0);
+	// if (error == -1)
+	// 	return (-1);
+	// timestamp = (((long long)(tv.tv_sec)) * 1000000)
+	// 	+ (((long long)(tv.tv_usec)));
+	return (ft_timestamp_ms() * 1000);
 }
 
 int	ft_wait_ms(int time_ms, long long timestamp, int number,
@@ -49,6 +49,8 @@ int	ft_wait_ms(int time_ms, long long timestamp, int number,
 	ft_lock_print(*(info->start_time), timestamp, number, str, info);
 	if (time_ms <= 0)
 		return (0);
+	if (time_ms > 10)
+		usleep((time_ms - 10) * 1000);
 	current = ft_timestamp_ms() - *(info->start_time);
 	if (current == -1)
 		return (-1);
@@ -73,10 +75,12 @@ int	ft_only_wait_ms(int time_ms)
 	if (time_ms <= 0)
 		return (0);
 	start = ft_timestamp_micro();
-	if (start == -1)
-		return (-1);
 	end = start + (time_ms * 1000);
-	current = start;
+	if (start == -1)
+		return (-1);	
+	if (time_ms > 10)
+		usleep((time_ms - 10) * 1000);
+	current = ft_timestamp_micro();
 	while (current < end)
 	{
 		if (usleep(500) == -1)
