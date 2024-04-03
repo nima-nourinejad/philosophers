@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:17:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:12:13 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_info
 	t_fork			*fork;
 	t_data			*data;
 	int				*dead;
+	int				*full;
 	long long		*start_time;
 	pthread_mutex_t	*start_lock;
 	pthread_mutex_t	*print_lock;
@@ -103,7 +104,7 @@ int				ft_lock_print_eating(long long timestamp, int number,
 int				ft_lock_print_dead(long long timestamp,	int number,
 					char *str, t_info *info);
 int				ft_only_wait_ms(int time_ms);
-int				ft_is_dead(void *input);
+int				ft_is_dead_full(void *input);
 int				ft_think(void *input, int thread_num, int finish);
 void			*ft_eat_one(void *input);
 int				ft_eat_sleep(void *input, int thread_num, int finish);

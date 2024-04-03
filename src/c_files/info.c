@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/02 15:49:56 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:53:55 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_info	*ft_clean_info(t_info *node)
 {
 	ft_clean_info_node(node->start_lock, 1, node->print_lock, 1);
 	free(node->dead);
+	free(node->full);
 	free(node->start_time);
 	free (node);
 	return (0);
@@ -54,6 +55,7 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	pthread_mutex_t	*print_lock;
 	long long		*start_time;
 	int				*dead;
+	int				*full;
 	int				error;
 	t_info			*info;
 
@@ -73,6 +75,8 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	{
 		return (ft_clean_info_node(start_lock, 1, print_lock, 1));
 	}
+	full = malloc(sizeof(int));
+	*full = 0;
 	dead = malloc(sizeof(int));
 	if (!dead)
 	{
@@ -95,6 +99,7 @@ t_info	*ft_create_info_node(t_philo *philo, t_fork *fork,
 	info->start_lock = start_lock;
 	info->print_lock = print_lock;
 	info->dead = dead;
+	info->full = full;
 	return (info);
 }
 

@@ -6,13 +6,13 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:01:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:36:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 15:19:58 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-int	ft_sleep(void *input, int thread_num, int finish)
+int	ft_sleep(void *input, int thread_num)
 {
 	long long	t;
 	long long	start_time;
@@ -33,7 +33,7 @@ int	ft_sleep(void *input, int thread_num, int finish)
 		&error, "unlock problem");
 	ft_lock_print(t, thread_num, "is sleeping", ((t_input *)input)->info);
 	ft_wait_ms(sleep_time, t, start_time);
-	if (finish || ft_is_dead(input))
+	if (ft_is_dead_full(input))
 		return (1);
 	return (error);
 }
@@ -55,7 +55,7 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 	eat_time = *((((((t_input *)input)->info)->data)->next)->next->value);
 	eat_times = *((((((((t_input *)input)->info)->data)
 						->next)->next)->next)->next->value);
-	if (ft_is_dead(input))
+	if (ft_is_dead_full(input))
 		return (1);
 	error = pthread_mutex_lock(philo_node->left_fork);
 	if (!error)
@@ -64,6 +64,11 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 		ft_lock_print(t, thread_num, "has taken a fork",
 			((t_input *)input)->info);
 	}
+	if (ft_is_dead_full(input))
+	{
+		pthread_mutex_unlock(philo_node->left_fork);
+		return (1);
+	}
 	error = pthread_mutex_lock(philo_node->right_fork);
 	if (!error)
 	{
@@ -71,14 +76,12 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 		pthread_mutex_lock(philo_node->philo_lock);
 		*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
 		*(philo_node->last_eat) = t;
-		if (*(philo_node->times_eat) >= eat_times && eat_times != -1)
-			finish = 1;
 		pthread_mutex_unlock(philo_node->philo_lock);
 		ft_lock_print_eating(t, thread_num, ((t_input *)input)->info);
 		ft_wait_ms(eat_time, t, start_time);
 	}
-	finish = ft_sleep(input, thread_num, finish);
-	if (finish || ft_is_dead(input))
+	finish = ft_sleep(input, thread_num);
+	if (finish || ft_is_dead_full(input))
 		return (1);
 	return (error);
 }

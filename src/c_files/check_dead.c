@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:44:20 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 13:41:34 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:55:16 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,12 @@ int	ft_check_dead_full(t_info *info, long long current)
 		philo_node = philo_node->next;
 	}
 	if (sum >= *((info->data)->value) && *(times->value) != -1)
+	{
+		pthread_mutex_lock(((t_info *)info)->start_lock);
+		*(((t_info *)info)->full) = 1;
+		pthread_mutex_unlock(((t_info *)info)->start_lock);
 		return (1);
+	}
 	return (0);
 }
 
