@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:13:51 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:01:47 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 17:40:12 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ long long	ft_timestamp_ms(void)
 	int				error;
 
 	error = gettimeofday(&tv, 0);
-	if (error == -1)
-		return (-1);
 	timestamp = (((long long)(tv.tv_sec)) * 1000)
 		+ (((long long)(tv.tv_usec)) / 1000);
 	return (timestamp);
@@ -36,16 +34,11 @@ int	ft_wait_ms(int time_ms, long long timestamp, long long start_time)
 	if (time_ms > 10)
 		usleep((time_ms - 10) * 1000);
 	current = ft_timestamp_ms() - start_time;
-	if (current == -1)
-		return (-1);
 	end = timestamp + time_ms;
 	while (current < end)
 	{
-		if (usleep(500) == -1)
-			return (-1);
+		usleep(500);
 		current = ft_timestamp_ms() - start_time;
-		if (current == -1)
-			return (-1);
 	}
 	return (0);
 }
@@ -60,18 +53,13 @@ int	ft_only_wait_ms(int time_ms)
 		return (0);
 	start = ft_timestamp_ms();
 	end = start + time_ms;
-	if (start == -1)
-		return (-1);
 	if (time_ms > 10)
 		usleep((time_ms - 10) * 1000);
 	current = ft_timestamp_ms();
 	while (current < end)
 	{
-		if (usleep(500) == -1)
-			return (-1);
+		usleep(500);
 		current = ft_timestamp_ms();
-		if (current == -1)
-			return (-1);
 	}
 	return (0);
 }

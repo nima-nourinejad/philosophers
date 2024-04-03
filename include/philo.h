@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:22:03 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 16:59:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ int				ft_lock_print_eating(long long timestamp, int number,
 int				ft_lock_print_dead(long long timestamp,	int number,
 					t_info *info);
 int				ft_only_wait_ms(int time_ms);
+int				ft_start(void *input, int thread_num,
+					int finish, int total_number);
 int				ft_is_dead_full(void *input);
 int				ft_think(void *input, int thread_num, int finish);
 void			*ft_eat_one(void *input);

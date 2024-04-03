@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/03 15:16:03 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/03 17:42:01 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ NAME = philo
 # Compiler and flags
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -o2 
+CFLAGS = -Wall -Wextra -Werror
 ADDRESS_SANITIZE = -fsanitize=address
 THREAD_SANITIZE = -fsanitize=thread
 LLDB = -g
@@ -49,6 +49,7 @@ SRCS =  $(SRCDIR)/atoi_error.c \
 		$(SRCDIR)/check_dead.c \
 		$(SRCDIR)/is_dead_full.c \
 		$(SRCDIR)/eat_one.c \
+		$(SRCDIR)/start.c \
 		$(SRCDIR)/eat_sleep.c \
 		$(SRCDIR)/think.c \
 		$(SRCDIR)/clean.c \

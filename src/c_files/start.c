@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_cycle.c                                     :+:      :+:    :+:   */
+/*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 13:36:31 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:58:46 by nnourine         ###   ########.fr       */
+/*   Created: 2024/04/03 16:50:24 by nnourine          #+#    #+#             */
+/*   Updated: 2024/04/03 17:16:04 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-void	*ft_philo_cycle(void *input)
+int	ft_start(void *input, int thread_num, int finish, int total_number)
 {
-	int	thread_num;
-	int	total_number;
-	int	finish;
-
-	if (ft_lock_unlock(((((t_input *)input)->info)->start_lock)))
-		return (NULL);
-	finish = 0;
-	total_number = *(((((t_input *)input)->info)->data)->value);
-	thread_num = *(((t_input *)input)->thread_num);
-	if (total_number == 1)
-		return (ft_eat_one(input));
-	finish = ft_start(input, thread_num, finish, total_number);
-	while (!finish)
+	if (thread_num % 2 == 0)
 	{
-		finish = ft_eat_sleep(input, thread_num, finish);
 		finish = ft_think(input, thread_num, finish);
+		if (usleep(3000))
+			return (1);
 	}
-	return (NULL);
+	else if (thread_num == total_number)
+	{
+		finish = ft_think(input, thread_num, finish);
+		if (usleep(6000))
+			return (1);
+	}
+	return (0);
 }
