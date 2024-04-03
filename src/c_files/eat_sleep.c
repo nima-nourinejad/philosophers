@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:01:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:09:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:18:36 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 		if (*(philo_node->times_eat) >= eat_times && eat_times != -1)
 			finish = 1;
 		pthread_mutex_unlock(philo_node->philo_lock);
-		ft_lock_print(t, thread_num, "has taken a fork", ((t_input *)input)->info);
-		ft_lock_print(t, thread_num, "is eating", ((t_input *)input)->info);
+		ft_lock_print_eating(t, thread_num, ((t_input *)input)->info);
 		ft_wait_ms(eat_time, t, start_time);
 	}
 	finish = ft_sleep(input, thread_num, finish);
