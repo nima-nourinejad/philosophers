@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 13:20:51 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:52:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void			ft_putstr_fd(char *s, int fd);
 void			*ft_philo_cycle(void *input);
 int				ft_check_dead(t_info *info);
 int				ft_atoi_error(char *str, int *error);
+int				ft_strncmp(const char *s1, const char *s2,
+					size_t n);
+int				ft_atoi(char *str, int *error);
 void			ft_print_error(char *error_message);
 t_fork			*ft_clean_fork(t_fork *first);
 t_fork			*ft_create_fork(int *total_number);
@@ -119,5 +122,6 @@ int				ft_clean_failure(t_info *info,
 int				ft_full_clean(t_info *info,
 					t_input *input, t_thread *thread);
 int				ft_lock_unlock(pthread_mutex_t *lock);
+void 			ft_check_input(int argc, char **argv);
 
 #endif // PHILO_H

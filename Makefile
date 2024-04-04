@@ -6,7 +6,7 @@
 #    By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 15:48:51 by nnourine          #+#    #+#              #
-#    Updated: 2024/04/03 17:42:01 by nnourine         ###   ########.fr        #
+#    Updated: 2024/04/04 14:58:29 by nnourine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,13 @@ INCDIR = include
 
 # Files
 SRCS =  $(SRCDIR)/atoi_error.c \
+		$(SRCDIR)/strncmp.c \
+		$(SRCDIR)/atoi.c \
 		$(SRCDIR)/putstr_fd.c \
 		$(SRCDIR)/print_error.c \
-		$(SRCDIR)/check_error.c \
 		$(SRCDIR)/lock_print.c \
 		$(SRCDIR)/wait.c \
+		$(SRCDIR)/check_input.c \
 		$(SRCDIR)/find_fork.c \
 		$(SRCDIR)/data.c \
 		$(SRCDIR)/fork.c \

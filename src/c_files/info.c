@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 13:43:33 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:01:46 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,10 @@ t_info	*ft_create_info(int argc, char **argv)
 	t_philo		*philo;
 	t_info		*info;
 
-	if (argc != 5 && argc != 6)
-		return (ft_info_failure(0, 0, 0, "wrong number of arguments"));
+	ft_check_input(argc, argv);
 	data = ft_create_data(argc, argv);
 	if (!data)
-		return (ft_info_failure(0, 0, 0, "wrong user input"));
+		return (ft_info_failure(0, 0, 0, "Problem in data"));
 	fork = ft_create_fork(data->value);
 	if (!fork)
 		return (ft_info_failure(0, 0, data, "Problem in fork"));
