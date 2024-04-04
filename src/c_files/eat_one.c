@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 13:24:06 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 14:03:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 11:58:57 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	*ft_eat_one(void *input)
 	{
 		t = ft_timestamp_ms() - start_time;
 		ft_lock_print(t, 1, "has taken a fork", ((t_input *)input)->info);
-		ft_wait_ms(0, t, start_time);
 	}
 	pthread_mutex_unlock(philo_node->left_fork);
 	return (0);

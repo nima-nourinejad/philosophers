@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:44:20 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:02:29 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:03:14 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_check_dead(t_info *info)
 		current = ft_timestamp_ms() - start_time;
 		finish = ft_check_dead_full(info, current);
 		if (!finish)
-			ft_only_wait_ms(1);
+			ft_only_wait_1_ms();
 	}
 	return (0);
 }
