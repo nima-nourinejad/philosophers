@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:42:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:26:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:51:23 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_print_input_error(int index)
 		ft_print_error("Philosophers do not need food");
 }
 
-void	ft_check_zero(int argc, char **argv)
+int	ft_check_zero(int argc, char **argv)
 {
 	int	error;
 	int	n;
@@ -45,10 +45,11 @@ void	ft_check_zero(int argc, char **argv)
 		index++;
 	}
 	if (error)
-		exit(EXIT_FAILURE);
+		return (1);
+	return (0);
 }
 
-void	ft_check_input(int argc, char **argv)
+int	ft_check_input(int argc, char **argv)
 {
 	int	error;
 	int	n;
@@ -57,7 +58,7 @@ void	ft_check_input(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		ft_print_error("wrong number of arguments");
-		exit(EXIT_FAILURE);
+		return (1);
 	}
 	index = 1;
 	error = 0;
@@ -67,9 +68,9 @@ void	ft_check_input(int argc, char **argv)
 		if (error || n < 0)
 		{
 			ft_print_error("wrong input");
-			exit(EXIT_FAILURE);
+			return (1);
 		}
 		index++;
 	}
-	ft_check_zero(argc, argv);
+	return (ft_check_zero(argc, argv));
 }

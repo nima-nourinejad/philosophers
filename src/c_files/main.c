@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 10:23:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 13:47:58 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:58:24 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char **argv)
 	int			error;
 
 	info = ft_create_info(argc, argv);
+	if (!info)
+		return (1);
 	if (pthread_mutex_lock(info->start_lock))
 		return (ft_clean_failure(info, 0, "Locking start lock"));
 	input = ft_create_input(info->data->value, info);
@@ -34,5 +36,5 @@ int	main(int argc, char **argv)
 	ft_full_clean(info, input, thread);
 	if (error)
 		return (ft_clean_failure(0, 0, "Check Thread Problem"));
-	return (EXIT_SUCCESS);
+	return (0);
 }

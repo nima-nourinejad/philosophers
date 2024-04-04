@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 13:29:52 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:01:46 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:53:25 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_info	*ft_info_failure(t_philo *philo, t_fork *fork, t_data *data, char *str)
 		ft_clean_data(data);
 	if (str)
 		ft_print_error(str);
-	exit (EXIT_FAILURE);
+	return (0);
 }
 
 t_info	*ft_malloc_info_node(void)
@@ -74,7 +74,8 @@ t_info	*ft_create_info(int argc, char **argv)
 	t_philo		*philo;
 	t_info		*info;
 
-	ft_check_input(argc, argv);
+	if (ft_check_input(argc, argv))
+		return (0);
 	data = ft_create_data(argc, argv);
 	if (!data)
 		return (ft_info_failure(0, 0, 0, "Problem in data"));

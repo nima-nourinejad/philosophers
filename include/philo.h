@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:26:27 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:55:44 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,11 @@ int				ft_is_dead_full(void *input);
 int				ft_think(void *input, int thread_num, int finish);
 void			*ft_eat_one(void *input);
 int				ft_eat_sleep(void *input, int thread_num, int finish);
-void			ft_check_error(int value, int *error, char *str);
 int				ft_clean_failure(t_info *info,
 					t_input *input, char *str);
 int				ft_full_clean(t_info *info,
 					t_input *input, t_thread *thread);
 int				ft_lock_unlock(pthread_mutex_t *lock);
-void			ft_check_input(int argc, char **argv);
+int			ft_check_input(int argc, char **argv);
 
 #endif // PHILO_H

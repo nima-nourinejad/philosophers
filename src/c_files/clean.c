@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:03:19 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 13:19:05 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:53:53 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_clean_failure(t_info *info, t_input *input, char *str)
 	}
 	if (str)
 		ft_print_error(str);
-	return (EXIT_FAILURE);
+	return (1);
 }
 
 int	ft_full_clean(t_info *info,
@@ -81,5 +81,5 @@ int	ft_full_clean(t_info *info,
 		ft_clean_data(info->data);
 		ft_clean_info(info);
 	}
-	return (EXIT_FAILURE);
+	return (1);
 }
