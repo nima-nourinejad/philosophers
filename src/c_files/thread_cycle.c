@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 13:36:31 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 11:56:54 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:49:09 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ void	*ft_philo_cycle(void *input)
 		finish = ft_eat_sleep(input, thread_num, finish);
 		finish = ft_think(input, thread_num, finish);
 	}
-	
 	return (NULL);
 }
