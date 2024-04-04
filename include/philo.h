@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 14:52:24 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:26:27 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ int				ft_clean_failure(t_info *info,
 int				ft_full_clean(t_info *info,
 					t_input *input, t_thread *thread);
 int				ft_lock_unlock(pthread_mutex_t *lock);
-void 			ft_check_input(int argc, char **argv);
+void			ft_check_input(int argc, char **argv);
 
 #endif // PHILO_H

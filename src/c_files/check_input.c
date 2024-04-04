@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:42:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:03:06 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:26:38 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_print_input_error(int index)
 		ft_print_error("Philosophers do not need food");
 }
 
-void ft_check_zero(int argc, char **argv)
+void	ft_check_zero(int argc, char **argv)
 {
 	int	error;
 	int	n;
