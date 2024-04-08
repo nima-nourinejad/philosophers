@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 12:54:59 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/03 16:13:52 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/08 15:57:13 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_lock_print_dead(long long timestamp,	int number, t_info *info)
 {
 	if (pthread_mutex_lock(info->print_lock))
 		return (1);
-	printf("\033[1;31m%lld\t%d %s\033[0m\n", timestamp, number, "is dead");
+	printf("\033[1;31m%lld\t%d %s\033[0m\n", timestamp, number, "died");
 	if (pthread_mutex_unlock(info->print_lock))
 		return (1);
 	return (0);
