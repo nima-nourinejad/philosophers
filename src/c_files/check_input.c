@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 14:42:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:51:23 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/08 10:16:05 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,22 @@ int	ft_check_zero(int argc, char **argv)
 	int	error;
 	int	n;
 	int	index;
+	int	final_error;
 
 	index = 1;
 	error = 0;
+	final_error = 0;
 	while (index < argc)
 	{
 		n = ft_atoi(argv[index], &error);
 		if (n == 0)
 		{
-			error = 1;
+			final_error = 1;
 			ft_print_input_error(index);
 		}
 		index++;
 	}
-	if (error)
+	if (final_error)
 		return (1);
 	return (0);
 }

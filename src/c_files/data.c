@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:31:09 by nnourine          #+#    #+#             */
-/*   Updated: 2024/03/22 10:44:35 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/08 10:16:54 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ t_data	*ft_create_data(int argc, char **argv)
 		}
 		else
 			new = ft_create_data_node(number, argv[number]);
-		if (!new)
-			return (ft_clean_data(first));
 		if (number == 1)
 			first = new;
 		else
 			old->next = new;
+		if (!new)
+			return (ft_clean_data(first));
 		old = new;
 	}
 	return (first);

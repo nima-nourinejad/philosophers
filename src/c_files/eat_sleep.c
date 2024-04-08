@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 12:01:15 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 14:13:20 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/08 10:30:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,17 @@ int	ft_first_fork(t_philo *philo_node, int thread_num,
 	return (0);
 }
 
+int	ft_philo_update(t_philo *philo_node, long long t)
+{
+	if (pthread_mutex_lock(philo_node->philo_lock))
+		return (1);
+	*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
+	*(philo_node->last_eat) = t;
+	if (pthread_mutex_unlock(philo_node->philo_lock))
+		return (1);
+	return (0);
+}
+
 int	ft_eat_sleep(void *input, int thread_num, int finish)
 {
 	long long	t;
@@ -77,10 +88,8 @@ int	ft_eat_sleep(void *input, int thread_num, int finish)
 	if (pthread_mutex_lock(philo_node->right_fork))
 		return (2);
 	t = ft_timestamp_ms() - start_time;
-	pthread_mutex_lock(philo_node->philo_lock);
-	*(philo_node->times_eat) = *(philo_node->times_eat) + 1;
-	*(philo_node->last_eat) = t;
-	pthread_mutex_unlock(philo_node->philo_lock);
+	if (ft_philo_update(philo_node, t))
+		return (1);
 	ft_lock_print_eating(t, thread_num, ((t_input *)input)->info);
 	ft_wait_ms(eat_time, t, start_time);
 	finish = ft_sleep(input, thread_num);
