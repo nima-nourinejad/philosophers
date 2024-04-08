@@ -6,7 +6,7 @@
 /*   By: nnourine <nnourine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:36:16 by nnourine          #+#    #+#             */
-/*   Updated: 2024/04/04 15:59:38 by nnourine         ###   ########.fr       */
+/*   Updated: 2024/04/08 18:25:15 by nnourine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,6 @@ typedef struct s_thread
 	pthread_t			*thread;
 	struct s_thread		*next;
 }						t_thread;
-
-typedef struct s_utility
-{
-	pthread_t	*check_dead;
-}				t_utility;
 
 void			ft_putstr_fd(char *s, int fd);
 void			*ft_philo_cycle(void *input);
